@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Link } from 'react-router-dom';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 class Home extends Component {
@@ -33,7 +33,6 @@ class Home extends Component {
                 {/* <!-- //. search Popup --> */}
 
                 {/* <!-- navbar start --> */}
-                <Router>
                 <header className="navbar-area">
                     <nav className="navbar navbar-expand-lg">
                         <div className="container nav-container">
@@ -48,10 +47,10 @@ class Home extends Component {
                             
                                 <ul className="navbar-nav menu-open">
                                     <li className="current-menu-item menu-item-has-children">
-                                    <Link to={"/home1"}>HOME</Link>
+                                    <Link to={"/"}>HOME</Link>
                                         {/* <a href="home-1.html">HOME</a> */}
                                         <ul className="sub-menu ps-0">
-                                            <li><Link to={"/home1"}>Home 01</Link>
+                                            <li><Link to={"/"}>Home 01</Link>
                                                 {/* <a href="home-1.html">Home 01</a> */}
                                                 </li>
                                             {/* <li><a href="home-2.html">Home 02</a></li>
@@ -128,11 +127,9 @@ class Home extends Component {
                         </div>
                     </nav>
                 </header>
-                </Router>
                 {/* <!-- navbar end --> */}
 
                 {/* <!-- Banner Area Start--> */}
-                <Router>
                 <section className="banner-area">
                     <div className="banner-thumb">
                         <img src="assets/img/banner/banner.png" alt="img" />
@@ -1360,7 +1357,6 @@ class Home extends Component {
                         </div>
                     </div>
                 </footer>
-                </Router>
                 {/* <!-- footer area end --> */}
 
                 {/* <!-- back-to-top end --> */}

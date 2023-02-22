@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 const MenuList = () => {
   return (
     <div>
@@ -27,7 +27,6 @@ const MenuList = () => {
       </div>
       {/* //. search Popup */}
       {/* navbar start */}
-      <Router>
         <header className="navbar-area">
           <nav className="navbar navbar-expand-lg">
             <div className="container nav-container">
@@ -42,10 +41,10 @@ const MenuList = () => {
 
                 <ul className="navbar-nav menu-open">
                   <li className="current-menu-item menu-item-has-children">
-                    <Link to={"/home1"}>HOME</Link>
+                    <Link to={"/"}>HOME</Link>
 
                     <ul className="sub-menu ps-0">
-                      <li><Link to={"/home1"}>Home 01</Link>
+                      <li><Link to={"/"}>Home 01</Link>
 
                       </li>
 
@@ -104,7 +103,6 @@ const MenuList = () => {
             </div>
           </nav>
         </header>
-      </Router>
       {/* navbar end */}
       {/* bredcrumb Area Start*/}
       <section className="breadcrumb-area">

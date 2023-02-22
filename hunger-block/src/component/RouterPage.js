@@ -1,21 +1,25 @@
 import React from 'react'
-import {BrowserRouter,
-    Routes,
-    Route,
-  } from "react-router-dom";
-  import Home from '../pages/Home';
-import Shop from '../pages/shop';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import { pages_route_list } from '../utils/pages_route_list';
 
 const RouterPage = () => {
   return (
     <div>
-      <BrowserRouter>
+      <Router>
         <Routes>
-          <Route exact path="/" element={<Home/>}/>
-          <Route path="/shop" element={<Shop />} />
-      </Routes>
-      </BrowserRouter>
-      
+          {
+            React.Children.toArray(pages_route_list.map((elem) => {
+              const { linkTo, element } = elem
+              return <Route element={element} path={linkTo} />
+            }))
+          }
+        </Routes>
+      </Router>
+
     </div>
   )
 }

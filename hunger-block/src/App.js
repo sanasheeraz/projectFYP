@@ -1,18 +1,13 @@
 import React from 'react';
 import './App.css';
-import Cart from './pages/Cart';
-import CheckOut from './pages/CheckOut';
-import Home from './pages/Home';
-import Shop from './pages/shop';
-import SingleProduct from './pages/SingleProduct';
+import RouterPage from './component/RouterPage';
+
 
 
 function App() {
   return (
-    <div className="App">
-      <CheckOut />
-      
-    </div>
+    <RouterPage />
+    
   );
 }
 
