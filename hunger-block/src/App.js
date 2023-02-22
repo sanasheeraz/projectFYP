@@ -1,11 +1,17 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import Home from './pages/home1';
+import Cart from './pages/Cart';
+import CheckOut from './pages/CheckOut';
+import Home from './pages/Home';
+import Shop from './pages/shop';
+import SingleProduct from './pages/SingleProduct';
+
 
 function App() {
   return (
     <div className="App">
-      <Home/>
+      <CheckOut />
+      
     </div>
   );
 }
