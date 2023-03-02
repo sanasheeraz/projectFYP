@@ -1,9 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 
-class Home extends Component {
-    render() {
+import { createStructuredSelector } from 'reselect';
+import PropTypes from 'prop-types'
+// bring connect from react-redux, it's the bridge for connecting component to redux
+import { connect } from 'react-redux'
+import * as actions from "../store/Auth/actions"
+import { makeSelectPostsList } from "../store/Auth/selector"
+
+export const Home = (props) => {
+    
+    const { postsList, getPostsList } = props;
+
+    useEffect(() => {
+        getPostsList(/* token */);
+    }, [])
+
+    useEffect(() => {
+    console.log("==== Updated postsList ====", postsList);
+    }, [postsList])
+
         return (
 
             <div className='sc5'>
@@ -1385,6 +1402,28 @@ class Home extends Component {
                 <script src="assets/js/main.js"></script>
             </div>
         );
-    }
+    
 }
-export default Home;
+
+
+// export default Home;
+Home.propTypes = {
+    posts: PropTypes.object,
+  }
+  
+  // Get state to props
+  const mapStateToProps = createStructuredSelector({
+    postsList: makeSelectPostsList(),
+  })
+
+  // Get dispatch / function to props
+  export function mapDispatchToProps(dispatch) {
+    return {
+        getPostsList: (/*token // add token here if required */) => {
+            dispatch(actions.getPostsRequest());
+        },
+    };
+}
+
+// To make those two function works register it using connect
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
