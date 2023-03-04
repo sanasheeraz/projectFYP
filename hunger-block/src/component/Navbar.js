@@ -67,8 +67,9 @@ const Navbar = () => {
                                 <ul>
                                     <li><Link className="search" to={'#'}> <i className="ri-search-line"></i></Link>
                                     </li>
-                                    <li className="phone-contact"><i className="ri-phone-fill float-start"></i>
-                                        +997 509 153 849
+                                    <li className="phone-contact"><Link to={"/signup"}>SIGNUP</Link>
+                                    </li>
+                                    <li className="phone-contact"><Link to={"/login"}>LOGIN</Link>
                                     </li>
                                     <li className="menu-cart"><Link to={"/cart"}>CART <span>1</span></Link></li>
                                     <li>49.50 $</li>

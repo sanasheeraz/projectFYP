@@ -1,0 +1,342 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_restId",
+				"type": "address"
+			}
+		],
+		"name": "placeOrder",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_custName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_custEmail",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_custPassword",
+				"type": "string"
+			}
+		],
+		"name": "registerCustomer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_menuItem",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_menuDescription",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_menuPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_measuringUnit",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_restId",
+				"type": "address"
+			}
+		],
+		"name": "registerMenuItem",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_restName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_restLocation",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_restDescription",
+				"type": "string"
+			}
+		],
+		"name": "registerRestaurant",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "customer",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "custName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "custEmail",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "custPassword",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "status",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "registered",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCustomers",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "custName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "custEmail",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "custPassword",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "registered",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct HungerBlockApp.Customer[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "invoices",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "invoiceId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "orderId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "menuId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "itemPrice",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "menuItems",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "menuId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "menuItem",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "menuDescription",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "menuPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "measuringUnit",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "restId",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "orderCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "orders",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "orderId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "custId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalAmount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "restaurant",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "restName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "restLocation",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "restDescription",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "status",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "registered",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

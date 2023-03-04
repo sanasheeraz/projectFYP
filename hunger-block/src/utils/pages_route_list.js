@@ -7,6 +7,8 @@ import Home from '../pages/Home';
 import Shop from '../pages/shop';
 import Menu from '../pages/Menu';
 import SingleProduct from '../pages/SingleProduct';
+import SignUp from "../pages/SignUp";
+import LogIn from "../pages/LogIn";
 
 export const pages_route_list = [
     {
@@ -57,7 +59,17 @@ export const pages_route_list = [
         element: <Menu />,
         authRequired: false
     },
-    
-    
+    {
+        caption: 'signup',
+        linkTo: '/signup',
+        element: <SignUp />,
+        authRequired: false
+    },
+    {
+        caption: 'login',
+        linkTo: '/login',
+        element: <LogIn />,
+        authRequired: false
+    },
 
 ]
