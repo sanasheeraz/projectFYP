@@ -19,8 +19,12 @@
     "redux-saga": "^1.2.2",
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.7",
+<<<<<<< HEAD
     "web-vitals": "^2.1.4",
     "web3": "^1.8.2"
+=======
+    "web-vitals": "^2.1.4"
+>>>>>>> c9f5866c2f72b136871f8c1ed4a190132535d692
   },
   "scripts": {
     "start": "react-scripts start",
