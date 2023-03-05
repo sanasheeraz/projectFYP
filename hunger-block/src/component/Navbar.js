@@ -1,7 +1,9 @@
 import React from 'react'
+import {ToastContainer,toast} from 'react-toastify'
 import {Link } from 'react-router-dom';
-
+import 'react-toastify/dist/ReactToastify.css';
 const Navbar = () => {
+    const notify = (msg) => toast.info(msg, { autoClose: 7000 });
   return (
     <div>
                 <header className="navbar-area">
@@ -17,12 +19,12 @@ const Navbar = () => {
                             <div className="collapse navbar-collapse" id="themefie_main_menu">
                             
                                 <ul className="navbar-nav menu-open">
-                                    <li className="current-menu-item menu-item-has-children">
+                                    <li className="current-menu-item">
                                     <Link to={"/"}>HOME</Link>
-                                        <ul className="sub-menu ps-0">
+                                        {/* <ul className="sub-menu ps-0">
                                             <li><Link to={"/"}>Home 01</Link>
                                                 </li>
-                                        </ul>
+                                        </ul> */}
                                     </li>
                                     <li className="current-menu-item menu-item-has-children">
                                     <Link to={"#"}>PAGES</Link>
@@ -78,6 +80,8 @@ const Navbar = () => {
                         </div>
                     </nav>
                 </header>
+                
+			<ToastContainer autoClose={5000} />
     </div>
   )
 }

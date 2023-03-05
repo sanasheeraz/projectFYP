@@ -1,13 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import Navbar from '../component/Navbar';
 import Footer from '../component/Footer'
-class Home extends Component {
-    render() {
-=======
-
-
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types'
 // bring connect from react-redux, it's the bridge for connecting component to redux
@@ -27,7 +21,6 @@ export const Home = (props) => {
     console.log("==== Updated postsList ====", postsList);
     }, [postsList])
 
->>>>>>> c9f5866c2f72b136871f8c1ed4a190132535d692
         return (
 
             <div className='sc5'>

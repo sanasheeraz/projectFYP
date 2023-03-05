@@ -99,7 +99,7 @@
 				"type": "address"
 			}
 		],
-		"name": "customer",
+		"name": "customers",
 		"outputs": [
 			{
 				"internalType": "string",
@@ -212,6 +212,30 @@
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "password",
+				"type": "string"
+			}
+		],
+		"name": "loginCustomer",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -253,6 +277,25 @@
 				"internalType": "bool",
 				"name": "status",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "myCustomers",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -308,7 +351,7 @@
 				"type": "address"
 			}
 		],
-		"name": "restaurant",
+		"name": "restaurants",
 		"outputs": [
 			{
 				"internalType": "string",

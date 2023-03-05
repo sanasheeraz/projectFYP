@@ -16,8 +16,7 @@ const LogIn = () => {
   const handleLogInClick = async () => {
     await customerLogin(email,password);
   };
-
-
+  
   return (
     <div>
       {/* navbar start */}
