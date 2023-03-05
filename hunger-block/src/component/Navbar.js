@@ -1,9 +1,27 @@
 import React from 'react'
+import { useState } from 'react';
 import {ToastContainer,toast} from 'react-toastify'
 import {Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { ReactSession }  from 'react-client-session';
 const Navbar = () => {
+    const [isLoggedin, setIsLoggedin] = useState(false);
     const notify = (msg) => toast.info(msg, { autoClose: 7000 });
+    const logout = () => {
+        ReactSession.set('username','');
+        setIsLoggedin(false);
+    };
+    var user =ReactSession.get("username");
+    // if(user!='')
+    // {
+    //     setIsLoggedin(true);
+    // }
+    if(user!='')
+    {
+    var button=true;
+    }else{
+       var button=false;
+    }
   return (
     <div>
                 <header className="navbar-area">
@@ -69,10 +87,11 @@ const Navbar = () => {
                                 <ul>
                                     <li><Link className="search" to={'#'}> <i className="ri-search-line"></i></Link>
                                     </li>
-                                    <li className="phone-contact"><Link to={"/signup"}>SIGNUP</Link>
-                                    </li>
-                                    <li className="phone-contact"><Link to={"/login"}>LOGIN</Link>
-                                    </li>
+                                    
+                                   {button?<li className="phone-contact"><button onClickCapture={logout}>LOGOUT</button></li>:<li className="phone-contact"><Link to={"/login"}>LOGIN</Link></li>}
+                                   {button?<li>Welcome {user}</li>:<li className="phone-contact"><Link to={"/signup"}>SIGNUP</Link></li>}
+                                   
+                                   
                                     <li className="menu-cart"><Link to={"/cart"}>CART <span>1</span></Link></li>
                                     <li>49.50 $</li>
                                 </ul>

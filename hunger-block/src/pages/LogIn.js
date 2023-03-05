@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
 import { customerLogin } from '../utils/interact'
+
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

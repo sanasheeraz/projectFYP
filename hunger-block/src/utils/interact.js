@@ -1,5 +1,8 @@
 import { toast } from "react-toastify";
 import { getDefaultNormalizer } from "@testing-library/react";
+import { ReactSession }  from 'react-client-session';
+
+
 require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3(window.ethereum);
@@ -122,7 +125,7 @@ export const getCustomers=async()=>{
 		}else
 		{
 			console.log("Result : "+results.length);
-			for(var i=0;i<results.length;i++)
+			for(var i=0;i<results.length;i++) //
 			{
 				console.log(results[i]);
 			}
@@ -140,9 +143,11 @@ export const customerLogin=async(email,password)=>{
 			{
 				console.log("Login Successfull");
 				toast.success("Login Successfull!", { autoClose: 7000 });
+				//session local storage
+				ReactSession.set("username", email);
+				//useState -> true
 			}else{
 				console.log("Inavlid Credentials");
-				
 				toast.error("Invalid Credentials");
 			}
 		}
