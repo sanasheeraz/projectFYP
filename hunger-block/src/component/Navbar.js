@@ -46,7 +46,7 @@ const Navbar = () => {
                                     </li>
                                     <li className="current-menu-item menu-item-has-children">
                                     <Link to={"#"}>PAGES</Link>
-                            <ul className="sub-menu ps-0">
+                                        <ul className="sub-menu ps-0">
                                             <li><Link to={"/about"}>About</Link></li>
                                             <li><Link to={"/blog"}>Blog</Link></li>
                                             <li><Link to={"/blog-details"}>Blog Details</Link></li>
@@ -57,8 +57,6 @@ const Navbar = () => {
                                             <li><Link to={"/cart"}>Cart</Link></li>
                                             <li><Link to={"/checkout"}>Checkout</Link></li>
                                         </ul>
-                                        
-                                        
                                     </li>
                                     <li>
                                         <Link  to={"/about"}>ABOUT US</Link>
@@ -87,11 +85,9 @@ const Navbar = () => {
                                 <ul>
                                     <li><Link className="search" to={'#'}> <i className="ri-search-line"></i></Link>
                                     </li>
-                                    
-                                   {button?<li className="phone-contact"><button onClickCapture={logout}>LOGOUT</button></li>:<li className="phone-contact"><Link to={"/login"}>LOGIN</Link></li>}
-                                   {button?<li>Welcome {user}</li>:<li className="phone-contact"><Link to={"/signup"}>SIGNUP</Link></li>}
-                                   
-                                   
+                                    {button?<li className="phone-contact"><button onClickCapture={logout}>LOGOUT</button></li>:<li className="phone-contact"><Link to={"/login"}>LOGIN</Link></li>}
+                                   {button?<li>Welcome {user}</li>:<li className="phone-contact"><Link to={"/signup"}>CUSTOMER</Link></li>}
+                                   <li className="phone-contact"><Link to={"/register_restaurant"}>RESTAURANT</Link></li>
                                     <li className="menu-cart"><Link to={"/cart"}>CART <span>1</span></Link></li>
                                     <li>49.50 $</li>
                                 </ul>

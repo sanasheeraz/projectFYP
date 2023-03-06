@@ -14,6 +14,8 @@ contract HungerBlockApp
     struct Restaurant{
         // uint restId;
         string restName;
+        string Email;
+        string Password;
         string restLocation;
         string restDescription; 
         bool status;
@@ -49,6 +51,7 @@ contract HungerBlockApp
     // Restaurant[] private restaurants;
 
     mapping(address => Restaurant) public restaurants;
+    address[] public myRestaurants;
     mapping(address => Customer) public customers;
     address[] public myCustomers;
     mapping(uint => MenuItem) public menuItems;  // array of menuItems
@@ -56,9 +59,21 @@ contract HungerBlockApp
     mapping(uint => Invoice) public invoices; //array of items 
     uint public orderCount = 0;
 
-    function registerRestaurant(string memory _restName,string memory _restLocation,string memory _restDescription) public{
+    function registerRestaurant(string memory _restName,string memory _restLocation,string memory _restDescription,string memory _email,string memory _password) public{
         require(!restaurants[msg.sender].registered, "Restaurant is already registered.");
-        restaurants[msg.sender]=Restaurant(_restName,_restLocation,_restDescription,true,true);
+        bool exist=false;
+        for (uint i = 0; i < myRestaurants.length; i++) {
+            address currentKey = myRestaurants[i];
+            Restaurant memory restaurant = restaurants[currentKey];
+            if (keccak256(abi.encodePacked(restaurant.Email)) == keccak256(abi.encodePacked(_email))) {
+                exist=true;
+                break;
+            }
+        }
+        require(!exist,"Email is already exist");
+        restaurants[msg.sender]=Restaurant(_restName,_email,_password,_restLocation,_restDescription,true,true);
+        myRestaurants.push(msg.sender);
+        
     }
 
     function registerCustomer(string memory _custName,string memory _custEmail,string memory _custPassword) public{
@@ -85,6 +100,15 @@ contract HungerBlockApp
         }
         return allCust;
     }
+    // Method to all Restaurant
+    function getRestaurants() external view returns (Restaurant[] memory) {
+        uint256 restCount = myRestaurants.length;
+        Restaurant[] memory allRest = new Restaurant[](restCount);
+        for (uint256 i = 0; i < restCount; i++) {
+            allRest[i] = restaurants[myRestaurants[i]];
+        }
+        return allRest;
+    }
     // Method for Customer Login
     function loginCustomer(string memory email,string memory password) external view returns (bool) {
         bool login=false;
@@ -98,10 +122,23 @@ contract HungerBlockApp
         }
         return login;
     }
-    function registerMenuItem(string memory _menuItem,string memory _menuDescription,uint _menuPrice,uint _measuringUnit,address _restId) public{
+    // Method for Restaurant Login
+    function loginRestaurant(string memory email,string memory password) external view returns (bool) {
+        bool login=false;
+        for (uint i = 0; i < myRestaurants.length; i++) {
+            address currentKey = myRestaurants[i];
+            Restaurant memory restaurant = restaurants[currentKey];
+            if ((keccak256(abi.encodePacked(restaurant.Email)) == keccak256(abi.encodePacked(email)))&&(keccak256(abi.encodePacked(restaurant.Password)) == keccak256(abi.encodePacked(password)))) {
+                login=true;
+                break;
+            }
+        }
+        return login;
+    }
+    function registerMenuItem(string memory _menuItem,string memory _menuDescription,uint _menuPrice,uint _measuringUnit) public{
         //only restaurant owner can add item
         // menuId[randomCounter]
-        menuItems[1001] = MenuItem(1001,_menuItem,_menuDescription,_menuPrice,_measuringUnit,_restId,true);
+        menuItems[1001] = MenuItem(1001,_menuItem,_menuDescription,_menuPrice,_measuringUnit,msg.sender,true);
     }
 
     //restaurantID , array of menuitems , price of each item, total amount

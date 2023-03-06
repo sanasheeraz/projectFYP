@@ -7,7 +7,7 @@ require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3(window.ethereum);
 const contractABI = require("../truffle_contracts_HungerBlockApp_sol_HungerBlockApp_abi.json");
-const contractAddress = "0xC7ef795020fBa01cd9206BE51c0717e1731EF333"; //my account address --ganache
+const contractAddress = "0x725C5b5E81b17db8621df765931f5e674A5CF812"; //my account address --ganache
 // const contractAddress = "0x03BfCF295046d12978b210948785cA3F85a392f4"
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9
@@ -152,4 +152,116 @@ export const customerLogin=async(email,password)=>{
 			}
 		}
 	});
+}
+export const restaurantLogin=async(email,password)=>{
+	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+	const theABIData = window.contract.methods.loginRestaurant(email,password).call(async function(error,result){
+		if(error!=null){
+			console.log(error);
+		}else
+		{
+			if(result)
+			{
+				console.log("Login Successfull");
+				toast.success("Login Successfull!", { autoClose: 7000 });
+				//session local storage
+				ReactSession.set("username", email);
+				//useState -> true
+			}else{
+				console.log("Inavlid Credentials");
+				toast.error("Invalid Credentials");
+			}
+		}
+	});
+}
+export const addRestaurant=async(name,location,description,email,password)=>{
+	//toast.info("Registering..");
+	// Get list of accounts of the connected wallet
+	const accounts = await web3.eth.getAccounts();
+	// MetaMask does not give you all accounts, only the selected account
+	console.log("Got accounts", accounts);
+	toast.info("Current Account: "+accounts);
+	let selectedAccount = accounts[0];
+	const rowResolvers = accounts.map(async (address) => {
+		const balance = await web3.eth.getBalance(address);
+		// ethBalance is a BigNumber instance
+		const ethBalance = web3.utils.fromWei(balance, "ether");
+		const humanFriendlyBalance = parseFloat(ethBalance).toFixed(4);
+		console.log(humanFriendlyBalance);
+	});
+	await Promise.all(rowResolvers);
+
+	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+	const theABIData = window.contract.methods.registerRestaurant(name,location,description,email,password).send({from:selectedAccount})
+	.on('error', (error) => {
+	  // check if the error is a require error
+	  if (error.toString().includes('revert')) {
+		// get the error message from the transaction receipt
+		web3.eth.getTransactionReceipt(error.hashes[0], (receiptError, receipt) => {
+		  if (!receiptError) {
+			const errorMessage = web3.utils.hexToAscii(receipt.logs[0].data);
+			// display the error message on your UI
+			console.log(errorMessage);
+			toast.error(errorMessage);
+		  }
+		});
+	  } else {
+		// hand
+		console.error(error);
+		toast.error(error);
+  		}
+	}).on('transactionHash', (hash) => {
+		console.log(`Transaction hash: ${hash}`);
+	  })
+	  .on('receipt', (receipt) => {
+		console.log('Transaction succeeded!');
+		toast.success("Registration Succeeded!");
+		// do something on UI to indicate success
+	  });
+}
+
+export const addMenuItem=async(name,description,price,unit)=>{
+	//toast.info("Registering..");
+	// Get list of accounts of the connected wallet
+	const accounts = await web3.eth.getAccounts();
+	// MetaMask does not give you all accounts, only the selected account
+	console.log("Got accounts", accounts);
+	toast.info("Current Account: "+accounts);
+	let selectedAccount = accounts[0];
+	const rowResolvers = accounts.map(async (address) => {
+		const balance = await web3.eth.getBalance(address);
+		// ethBalance is a BigNumber instance
+		const ethBalance = web3.utils.fromWei(balance, "ether");
+		const humanFriendlyBalance = parseFloat(ethBalance).toFixed(4);
+		console.log(humanFriendlyBalance);
+	});
+	await Promise.all(rowResolvers);
+
+	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+	const theABIData = window.contract.methods.registerMenuItem(name,description,price,unit).send({from:selectedAccount})
+	.on('error', (error) => {
+	  // check if the error is a require error
+	  if (error.toString().includes('revert')) {
+		// get the error message from the transaction receipt
+		web3.eth.getTransactionReceipt(error.hashes[0], (receiptError, receipt) => {
+		  if (!receiptError) {
+			const errorMessage = web3.utils.hexToAscii(receipt.logs[0].data);
+			// display the error message on your UI
+			console.log(errorMessage);
+			toast.error(errorMessage);
+		  }
+		});
+	  } else {
+		// hand
+		console.error(error);
+		toast.error(error);
+  		}
+	}).on('transactionHash', (hash) => {
+		console.log(`Transaction hash: ${hash}`);
+	  })
+	  .on('receipt', (receipt) => {
+		console.log('Transaction succeeded!');
+		toast.success("Registration Succeeded!");
+		// do something on UI to indicate success
+	  });
 }

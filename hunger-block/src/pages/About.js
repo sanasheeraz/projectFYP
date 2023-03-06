@@ -1,10 +1,10 @@
 import React from 'react'
-import { addCustomer, getCustomers } from '../utils/interact'
+import { getRestaurants, getCustomers } from '../utils/interact'
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
 const About = () => {
-  const onRegister = async () => {
-		await addCustomer('Ali', 'ali@gmail.com','12345');
+  const AllRestaurants = async () => {
+		await getRestaurants();
 	};
   const onGet = async () => {
 		await getCustomers();
@@ -73,8 +73,8 @@ const About = () => {
                 <div className="section-title text-center text-lg-start">
                   <h3 className="sub-title">Why choose us </h3>
                   <div>
-      <button className="btn btn-primary rounded-pill" onClick={onRegister}>
-					Register
+      <button className="btn btn-primary rounded-pill" onClick={AllRestaurants}>
+					Restaurants
 				</button>
         <button className="btn btn-primary rounded-pill" onClick={onGet}>
 					Customers

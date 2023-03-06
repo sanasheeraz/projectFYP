@@ -9,6 +9,7 @@ import Menu from '../pages/Menu';
 import SingleProduct from '../pages/SingleProduct';
 import SignUp from "../pages/SignUp";
 import LogIn from "../pages/LogIn";
+import RegisterRestaurant from "../pages/RegisterRestaurant";
 
 export const pages_route_list = [
     {
@@ -69,6 +70,11 @@ export const pages_route_list = [
         caption: 'login',
         linkTo: '/login',
         element: <LogIn />,
+        authRequired: false
+    },{
+        caption: 'register_restaurant',
+        linkTo: '/register_restaurant',
+        element: <RegisterRestaurant />,
         authRequired: false
     },
 
