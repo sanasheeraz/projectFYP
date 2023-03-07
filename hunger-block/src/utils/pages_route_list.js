@@ -4,12 +4,12 @@ import Cart from '../pages/Cart';
 import CheckOut from '../pages/CheckOut';
 import Contact from "../pages/Contact";
 import Home from '../pages/Home';
-import Shop from '../pages/shop';
 import Menu from '../pages/Menu';
 import SingleProduct from '../pages/SingleProduct';
 import SignUp from "../pages/SignUp";
 import LogIn from "../pages/LogIn";
 import RegisterRestaurant from "../pages/RegisterRestaurant";
+import Restaurants from "../pages/Restaurants";
 
 export const pages_route_list = [
     {
@@ -33,7 +33,7 @@ export const pages_route_list = [
     {
         caption: 'Shop',
         linkTo: '/Shop',
-        element: <Shop />,
+        element: <Restaurants />,
         authRequired: false
     },
     {

@@ -65,6 +65,7 @@ const RegisterRestaurant = () => {
             <div className="col-lg-3"></div>
               <div className="col-lg-6">
                 <div className="default-form-wrap border-0 p-0 mt-4 mt-lg-0">
+                
                     <div className="col-md-12">
                       <div className="single-input-wrap">
                         <input type="text" className="form-control" placeholder="Your Name" value={name} onChange={handleNameChange}/>

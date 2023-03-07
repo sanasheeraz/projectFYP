@@ -1,8 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react';
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
-const MenuList = () => {
-  return (
+import { getRestaurants } from '../utils/interact';
+const Restaurants = () => {
+  
+		 getRestaurants();
+	return (
     <div>
       {/* navbar start */}
         <Navbar></Navbar>
@@ -216,4 +220,4 @@ const MenuList = () => {
   )
 }
 
-export default MenuList
+export default Restaurants

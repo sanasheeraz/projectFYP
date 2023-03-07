@@ -7,7 +7,7 @@ require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3(window.ethereum);
 const contractABI = require("../truffle_contracts_HungerBlockApp_sol_HungerBlockApp_abi.json");
-const contractAddress = "0x725C5b5E81b17db8621df765931f5e674A5CF812"; //my account address --ganache
+const contractAddress = "0x280D2320338E922D80716D28e4486ad02D67486D"; //my account address --ganache
 // const contractAddress = "0x03BfCF295046d12978b210948785cA3F85a392f4"
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9
@@ -264,4 +264,20 @@ export const addMenuItem=async(name,description,price,unit)=>{
 		toast.success("Registration Succeeded!");
 		// do something on UI to indicate success
 	  });
+}
+export const getMenuItems=async()=>{
+	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+	const theABIData = window.contract.methods.getMenuItems().call(async function(error,results){
+		if(error!=null){
+			console.log(error);
+			toast.error(error);
+		}else
+		{
+			console.log("Result : "+results.length);
+			for(var i=0;i<results.length;i++) //
+			{
+				console.log(results[i]);
+			}
+		}
+	});
 }

@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
+import { getMenuItems } from '../utils/interact'
 const Menu = () => {
+  getMenuItems();
   return (
     <div>
       {/* navbar start */}
