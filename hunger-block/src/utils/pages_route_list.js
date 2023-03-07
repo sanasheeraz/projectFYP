@@ -10,12 +10,18 @@ import SignUp from "../pages/SignUp";
 import LogIn from "../pages/LogIn";
 import RegisterRestaurant from "../pages/RegisterRestaurant";
 import Restaurants from "../pages/Restaurants";
-
+import AddItem from "../pages/AddItem";
 export const pages_route_list = [
     {
         caption: 'Home',
         linkTo: '/',
         element: <Home />,
+        authRequired: false
+    },
+    {
+        caption: 'AddItem',
+        linkTo: '/addItem',
+        element: <AddItem />,
         authRequired: false
     },
     {

@@ -47,13 +47,9 @@ const Navbar = () => {
                                     <li className="current-menu-item menu-item-has-children">
                                     <Link to={"#"}>PAGES</Link>
                                         <ul className="sub-menu ps-0">
-                                            <li><Link to={"/about"}>About</Link></li>
-                                            <li><Link to={"/blog"}>Blog</Link></li>
-                                            <li><Link to={"/blog-details"}>Blog Details</Link></li>
                                             <li><Link to={"/menu"}>Menu</Link></li>
-                                            <li><Link to={"/menu-list"}>Menu List</Link></li>
                                             <li><Link to={"/shop"}>Shop</Link></li>
-                                            <li><Link to={"/single-product"}>Shop Details</Link></li>
+                                            <li><Link to={"/addItem"}>Add Menu Items</Link></li>
                                             <li><Link to={"/cart"}>Cart</Link></li>
                                             <li><Link to={"/checkout"}>Checkout</Link></li>
                                         </ul>
