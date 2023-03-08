@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
 import { addMenuItem } from '../utils/interact'
+import { USER_MENU_ITEM } from '../utils/constants'
 
 const AddItem = () => {
   const [image, setImage] = useState('../assets/img/item.jpg');
@@ -10,6 +11,8 @@ const AddItem = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [unit, setUnit] = useState('');
+ 
+  
 
   const handleImageChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
