@@ -6,12 +6,16 @@ import { addRestaurant } from '../utils/interact'
 
 const RegisterRestaurant = () => {
     
+  const [image, setImage] = useState('../assets/img/restLogo.png');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
 
+  const handleImageChange = (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+  };
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
@@ -65,6 +69,16 @@ const RegisterRestaurant = () => {
             <div className="col-lg-3"></div>
               <div className="col-lg-6">
                 <div className="default-form-wrap border-0 p-0 mt-4 mt-lg-0">
+                <div className="row">
+                    <div className="col-md-12">
+                      <div className='col-md-6'>
+                        <img src={image}/>
+                      </div>
+                      <div className='col-md-6'>
+                      <input type="file" accept="image/*" onChange={handleImageChange} />
+                      </div>
+                    </div>   
+                    </div>            
                     <div className="col-md-12">
                       <div className="single-input-wrap">
                         <input type="text" className="form-control" placeholder="Your Name" value={name} onChange={handleNameChange}/>

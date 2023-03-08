@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
-import { USER_MENU_ITEM } from "../utils/constants";
-const MenuList = () => {
-  const [menu_list, setmenu_list] = useState([]);
+import { getRestaurants } from "../utils/interact";
+import { USER_REST_LIST } from "../utils/constants";
+const Restaurants = () => {
+  const [rest_list, setrest_list] = useState([]);
 
-  const get_session_storage_menu_item = () => {
-    const menu_items = sessionStorage.getItem(USER_MENU_ITEM);
-    console.log({ menu_items });
+  getRestaurants();
+  const get_session_storage_rest_list = () => {
+    const get_rest_list = sessionStorage.getItem(USER_REST_LIST);
+    console.log({ get_rest_list });
 
-    return JSON.parse(menu_items);
+    return JSON.parse(get_rest_list);
+    //aa gya data,,,,
   };
 
   useEffect(() => {
-    const menu_list_data = get_session_storage_menu_item();
-    if (menu_list_data) {
-      setmenu_list([...menu_list_data]);
+    const rest_list_data = get_session_storage_rest_list();
+    if (rest_list_data) {
+      setrest_list([...rest_list_data]);
     }
+    console.log("menu_list================>", rest_list);
   }, []);
 
-  console.log("menu_list================>", menu_list);
-  // page open krain jahan map chaly g
   return (
     <div>
       {/* navbar start */}
@@ -40,8 +42,8 @@ const MenuList = () => {
           <div className="row justify-content-center">
             <div className="col-lg-6 align-self-center">
               <div className="banner-inner text-center">
-                <h3>Choose you items</h3>
-                <h1>Discover Our menu</h1>
+                <h3>Choose you Restaurant</h3>
+                <h1>Discover Our Restaurants</h1>
                 <nav aria-label="breadcrumb">
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -50,7 +52,7 @@ const MenuList = () => {
                       </a>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
-                      Menu List
+                      Restaurants List
                     </li>
                   </ul>
                 </nav>
@@ -67,7 +69,7 @@ const MenuList = () => {
             <div className="col-lg-5 col-md-8">
               <div className="section-title text-center">
                 <h3 className="sub-title">Our signature</h3>
-                <h2 className="title">Foodka Main Dishes</h2>
+                <h2 className="title">Foodka Main Restaurants</h2>
                 <p>
                   Amet amet parturient sed posuere vulputate pharetra a sapien,
                   habitant. Enim vel elit pharetra.
@@ -76,11 +78,12 @@ const MenuList = () => {
             </div>
           </div>
           <div className="row justify-content-center">
-            {menu_list.length > 0 ? (
-              menu_list.map((item, i) => {
-                const { name, description, price, unit } = item;
+            {rest_list.length > 0 ? (
+              rest_list.map((item, i) => {
+                const { name, location, description } = item;
+                console.log(item[0], "items.............");
                 return (
-                  <div className="col-lg-6">
+                  <div className="col-lg-6" key={i}>
                     <div className="single-item-wrap style-2">
                       <div className="media">
                         <div className="thumb">
@@ -91,15 +94,11 @@ const MenuList = () => {
                         </div>
                         <div className="wrap-details">
                           <h5>
-                            <a href="single-product.html">{name}</a>
+                            <a href="single-product.html">{item[0]}</a>
                           </h5>
-                          <p>{description}</p>
+                          <p>{item[3]}</p>
                           <div className="wrap-footer">
-                            <h6 className="price">{price}</h6>
-
-                            <button type="submit" className="btn btn-secondary">
-                              ADD TO CART
-                            </button>
+                            <h6 className="price">{item[4]}</h6>
                           </div>
                         </div>
                       </div>
@@ -212,24 +211,31 @@ const MenuList = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-6">
-                <div className="single-item-wrap style-2">
-                  <div className="media">
-                    <div className="thumb">
-                      <img src="assets/img/product/burger/1.png" alt="img" />
-                    </div>
-                    <div className="wrap-details">
-                      <h5><a href="single-product.html">All Season Gulliver Pizza</a></h5>
-                      <p>Pizza is a savory dish of Italian origin consisting of a usually round, flattened base of leavened.</p>
-                      <div className="wrap-footer">
-                        <h6 className="price">$17.00</h6>
-                        <button type="submit" className="btn btn-secondary">ADD TO CART</button>
-                      </div>                            
-                    </div>
+              <div className="col-lg-6"> */}
+            {/* <div className="single-item-wrap style-2">
+              <div className="media">
+                <div className="thumb">
+                  <img src="assets/img/product/burger/1.png" alt="img" />
+                </div>
+                <div className="wrap-details">
+                  <h5>
+                    <a href="single-product.html">All Season Gulliver Pizza</a>
+                  </h5>
+                  <p>
+                    Pizza is a savory dish of Italian origin consisting of a
+                    usually round, flattened base of leavened.
+                  </p>
+                  <div className="wrap-footer">
+                    <h6 className="price">$17.00</h6>
+                    <button type="submit" className="btn btn-secondary">
+                      ADD TO CART
+                    </button>
                   </div>
                 </div>
-              </div> */}
-            <div className="col-12">
+              </div>
+            </div> */}
+            {/* </div> */}
+            {/* <div className="col-12">
               <nav>
                 <ul className="pagination">
                   <li className="page-item">
@@ -259,7 +265,7 @@ const MenuList = () => {
                   </li>
                 </ul>
               </nav>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -277,4 +283,4 @@ const MenuList = () => {
   );
 };
 
-export default MenuList;
+export default Restaurants;

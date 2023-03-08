@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 contract HungerBlockApp
 {
+    uint256 private counter;
     struct Customer{
         // uint custId;
         string custName;
@@ -23,7 +24,7 @@ contract HungerBlockApp
         //image
     }
     struct MenuItem{
-        uint menuId;
+        uint256 menuId;
         string menuItem; // dish/receipe name
         string menuDescription;
         uint menuPrice;
@@ -54,7 +55,8 @@ contract HungerBlockApp
     address[] public myRestaurants;
     mapping(address => Customer) public customers;
     address[] public myCustomers;
-    mapping(uint => MenuItem) public menuItems;  // array of menuItems
+    //mapping(uint => MenuItem) public menuItems;  // array of menuItems
+    MenuItem[] private menuItems;
     mapping(uint => Orders) public orders;
     mapping(uint => Invoice) public invoices; //array of items 
     uint public orderCount = 0;
@@ -109,6 +111,16 @@ contract HungerBlockApp
         }
         return allRest;
     }
+    // Method to all MenuItems
+    function getMenuItems() external view returns (MenuItem[] memory) {
+        // uint256 itemCount = myItems.length;
+        // MenuItem[] memory allItems = new MenuItem[](itemCount);
+        // for (uint256 i = 0; i < restCount; i++) {
+        //     allItems[i] = menuItems[myItems[i]];
+        // }
+        // return allItems;
+        return menuItems;
+    }
     // Method for Customer Login
     function loginCustomer(string memory email,string memory password) external view returns (bool) {
         bool login=false;
@@ -135,10 +147,14 @@ contract HungerBlockApp
         }
         return login;
     }
+    function getNextValue() public returns (uint256) {
+        counter++;
+        return counter;
+    }
     function registerMenuItem(string memory _menuItem,string memory _menuDescription,uint _menuPrice,uint _measuringUnit) public{
         //only restaurant owner can add item
         // menuId[randomCounter]
-        menuItems[1001] = MenuItem(1001,_menuItem,_menuDescription,_menuPrice,_measuringUnit,msg.sender,true);
+        menuItems.push(MenuItem(getNextValue(),_menuItem,_menuDescription,_menuPrice,_measuringUnit,msg.sender,true));
     }
 
     //restaurantID , array of menuitems , price of each item, total amount

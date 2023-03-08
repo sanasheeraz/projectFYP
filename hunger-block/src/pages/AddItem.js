@@ -3,14 +3,20 @@ import { useState } from 'react'
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
 import { addMenuItem } from '../utils/interact'
+import { USER_MENU_ITEM } from '../utils/constants'
 
 const AddItem = () => {
-    
+  const [image, setImage] = useState('../assets/img/item.jpg');
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [unit, setUnit] = useState('');
+ 
+  
 
+  const handleImageChange = (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+  };
   const handleRecipeNameChange = (event) => {
     setRecipeName(event.target.value);
   };
@@ -61,6 +67,16 @@ const AddItem = () => {
             <div className="col-lg-3"></div>
               <div className="col-lg-6">
                 <div className="default-form-wrap border-0 p-0 mt-4 mt-lg-0">
+                <div className="row">
+                    <div className="col-md-12">
+                      <div className='col-md-6'>
+                        <img src={image}/>
+                      </div>
+                      <div className='col-md-6'>
+                      <input type="file" accept="image/*" onChange={handleImageChange} />
+                      </div>
+                    </div>   
+                    </div>  
                     <div className="col-md-12">
                       <div className="single-input-wrap">
                         <input type="text" className="form-control" placeholder="Recipe Name" value={recipeName} onChange={handleRecipeNameChange}/>

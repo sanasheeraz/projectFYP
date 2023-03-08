@@ -1,8 +1,33 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import Navbar from '../component/Navbar'
 import Footer from '../component/Footer'
+// import { getMenuItems } from '../utils/interact'
+import { USER_MENU_ITEM } from '../utils/constants'
 const Menu = () => {
+  // getMenuItems();
+  const [menu_list, setmenu_list] = useState([])
+
+  const get_session_storage_menu_item = () => {
+    const menu_items = sessionStorage.getItem(USER_MENU_ITEM)
+    console.log({menu_items});
+
+    return JSON.parse(menu_items)
+  }
+
+  useEffect(() => {
+    const menu_list_data = get_session_storage_menu_item()
+    if(menu_list_data){
+      setmenu_list([...menu_list_data])
+      // now we are getting data in menu_list state ....lakin yahn b result mein menu ka data nhi aa raha transaction has aa araha...
+
+    }
+
+   
+  }, [])
+
+  console.log('menu_list================>', menu_list)
   return (
     <div>
       {/* navbar start */}
