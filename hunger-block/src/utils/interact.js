@@ -243,6 +243,7 @@ export const addRestaurant = async (
   });
   await Promise.all(rowResolvers);
 
+<<<<<<< HEAD
   window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
   const theABIData = window.contract.methods
     .registerRestaurant(name, location, description, email, password)
@@ -362,3 +363,49 @@ export const get_rest_session_storage = () => {
   return rest_data;
 };
 // name ka parameter nhi to name nhi aye ga jb signup krte hein to name parameter pas krt rhe login ya signin pe name parameter pas hi nhi kiya
+=======
+	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+	const theABIData = window.contract.methods.registerMenuItem(name,description,price,unit).send({from:selectedAccount})
+	.on('error', (error) => {
+	  // check if the error is a require error
+	  if (error.toString().includes('revert')) {
+		// get the error message from the transaction receipt
+		web3.eth.getTransactionReceipt(error.hashes[0], (receiptError, receipt) => {
+		  if (!receiptError) {
+			const errorMessage = web3.utils.hexToAscii(receipt.logs[0].data);
+			// display the error message on your UI
+			console.log(errorMessage);
+			toast.error(errorMessage);
+		  }
+		});
+	  } else {
+		// hand
+		console.error(error);
+		toast.error(error);
+  		}
+	}).on('transactionHash', (hash) => {
+		console.log(`Transaction hash: ${hash}`);
+	  })
+	  .on('receipt', (receipt) => {
+		console.log('Transaction succeeded!');
+		toast.success("Registration Succeeded!");
+		// do something on UI to indicate success
+	  });
+}
+export const getMenuItems=async()=>{
+	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+	const theABIData = window.contract.methods.getMenuItems().call(async function(error,results){
+		if(error!=null){
+			console.log(error);
+			toast.error(error);
+		}else
+		{
+			console.log("Result : "+results.length);
+			for(var i=0;i<results.length;i++) //
+			{
+				console.log(results[i]);
+			}
+		}
+	});
+}
+>>>>>>> 26c98c555ced8d1e54bb48da12c54891161d2eec
