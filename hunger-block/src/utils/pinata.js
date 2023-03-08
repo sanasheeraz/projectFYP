@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const pinFileToIPFS = async (file) => {
   const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-  const apiKey = 'your-pinata-api-key';
-  const apiSecret = 'your-pinata-api-secret';
+  const apiKey = '172d2642f312165a10d3';
+  const apiSecret = 'c546d9808994104ab932152aa9f25abc5ff55ac43a48a1d28b82ad4595a27368';
 
   // create a FormData object to send the file
   const data = new FormData();
