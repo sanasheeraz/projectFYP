@@ -10,8 +10,6 @@ import { ToastContainer } from 'react-toastify';
 function App() {
   const dispatch = useDispatch()
 
-
-
   useEffect(() => {
 
     const data = get_session_storage()

@@ -88,7 +88,7 @@ const Restaurants = () => {
                       <div className="media">
                         <div className="thumb">
                           <img
-                            src="assets/img/product/burger/1.png"
+                            src={"https://gateway.pinata.cloud/ipfs/"+item[7]}
                             alt="img"
                           />
                         </div>

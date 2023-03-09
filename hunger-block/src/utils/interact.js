@@ -7,7 +7,7 @@ require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3(window.ethereum);
 const contractABI = require("../truffle_contracts_HungerBlockApp_sol_HungerBlockApp_abi.json");
-const contractAddress = "0xBdcE78991eE057Cc28fA95aeB1E9508596054f3b"; //my account address --ganache
+const contractAddress = "0xde64c5c578ad30e063c2e9F6BC3ce305af4Aa8FB"; //my account address --ganache
 // const contractAddress = "0x03BfCF295046d12978b210948785cA3F85a392f4"
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9
@@ -87,7 +87,15 @@ export const getRestaurants = async () => {
         console.log(error);
       } else {
         sessionStorage.setItem(USER_REST_LIST, JSON.stringify(results));
-        console.log("Result.... : " + results);
+        // console.log("Result.... : " + results);
+        console.log("Result : " + results.length);
+        for (
+          var i = 0;
+          i < results.length;
+          i++ //
+        ) {
+          console.log(results[i]);
+        }
         // the result is a string or object?? array of string
       }
       const rest_list = sessionStorage.getItem(USER_REST_LIST);
@@ -184,6 +192,7 @@ export const customerLogin = async (email, password) => {
           toast.success("Login Successfull!", { autoClose: 7000 });
           //session local storage
           sessionStorage.setItem("user_data", email);
+          window.location.reload();
           //useState -> true
         } else {
           console.log("Inavlid Credentials");
@@ -210,7 +219,8 @@ export const restaurantLogin = async (email, password) => {
           console.log("Login Successfull");
           toast.success("Login Successfull!", { autoClose: 7000 });
           //session local storage
-          sessionStorage.setItem("restaurant_data", email);
+          sessionStorage.setItem("rest_data", email);
+          window.location.reload();
           //   sessionStorage.setItem("user_data", email);
           //useState -> true ......        restaurant and customer alag alag hein
         } else {
@@ -225,7 +235,8 @@ export const addRestaurant = async (
   location,
   description,
   email,
-  password
+  password,
+  img
 ) => {
   //toast.info("Registering..");
   // Get list of accounts of the connected wallet
@@ -243,10 +254,8 @@ export const addRestaurant = async (
   });
   await Promise.all(rowResolvers);
 
-<<<<<<< HEAD
   window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
-  const theABIData = window.contract.methods
-    .registerRestaurant(name, location, description, email, password)
+  const theABIData = window.contract.methods.registerRestaurant(name, location, description, email, password,img)
     .send({ from: selectedAccount })
     .on("error", (error) => {
       // check if the error is a require error
@@ -275,12 +284,12 @@ export const addRestaurant = async (
     .on("receipt", (receipt) => {
       console.log("Transaction succeeded!", receipt);
       toast.success("Registration Succeeded!");
-      set_rest_list({ name, location, description });
+      set_rest_list({ name, location, description, img });
       // do something on UI to indicate success
     });
 };
 
-export const addMenuItem = async (name, description, price, unit) => {
+export const addMenuItem = async (name, description, price, unit,img) => {
   //toast.info("Registering..");
   // Get list of accounts of the connected wallet
   const accounts = await web3.eth.getAccounts();
@@ -299,7 +308,7 @@ export const addMenuItem = async (name, description, price, unit) => {
 
   window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
   const theABIData = window.contract.methods
-    .registerMenuItem(name, description, price, unit)
+    .registerMenuItem(name, description, price, unit,img)
     .send({ from: selectedAccount })
     .on("error", (error) => {
       // check if the error is a require error
@@ -328,7 +337,7 @@ export const addMenuItem = async (name, description, price, unit) => {
     .on("receipt", (receipt) => {
       console.log("Transaction succeeded!");
       toast.success("Registration Succeeded!");
-      set_menu_item({ name, description, price, unit });
+      set_menu_item({ name, description, price, unit,img });
       console.log("receipt.....................", receipt);
       // do something on UI to indicate success wait
     });
@@ -346,8 +355,7 @@ export const getMenuItems = async () => {
         for (var i = 0; i < results.length; i++) {
           console.log("data......................", results[i]);
         }
-        const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM); // alright, is mai mazeed kya requirement ha..?menuitem with details data ui pr display krwana hai.. array mai hamain kon kon si keys mil rhi hain...?
-
+        const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM);
         // }
       }
     });
@@ -363,49 +371,32 @@ export const get_rest_session_storage = () => {
   return rest_data;
 };
 // name ka parameter nhi to name nhi aye ga jb signup krte hein to name parameter pas krt rhe login ya signin pe name parameter pas hi nhi kiya
-=======
-	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
-	const theABIData = window.contract.methods.registerMenuItem(name,description,price,unit).send({from:selectedAccount})
-	.on('error', (error) => {
-	  // check if the error is a require error
-	  if (error.toString().includes('revert')) {
-		// get the error message from the transaction receipt
-		web3.eth.getTransactionReceipt(error.hashes[0], (receiptError, receipt) => {
-		  if (!receiptError) {
-			const errorMessage = web3.utils.hexToAscii(receipt.logs[0].data);
-			// display the error message on your UI
-			console.log(errorMessage);
-			toast.error(errorMessage);
-		  }
-		});
-	  } else {
-		// hand
-		console.error(error);
-		toast.error(error);
-  		}
-	}).on('transactionHash', (hash) => {
-		console.log(`Transaction hash: ${hash}`);
-	  })
-	  .on('receipt', (receipt) => {
-		console.log('Transaction succeeded!');
-		toast.success("Registration Succeeded!");
-		// do something on UI to indicate success
-	  });
-}
-export const getMenuItems=async()=>{
-	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
-	const theABIData = window.contract.methods.getMenuItems().call(async function(error,results){
-		if(error!=null){
-			console.log(error);
-			toast.error(error);
-		}else
-		{
-			console.log("Result : "+results.length);
-			for(var i=0;i<results.length;i++) //
-			{
-				console.log(results[i]);
-			}
-		}
-	});
-}
->>>>>>> 26c98c555ced8d1e54bb48da12c54891161d2eec
+// 	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
+// 	const theABIData = window.contract.methods.registerMenuItem(name,description,price,unit).send({from:selectedAccount})
+// 	.on('error', (error) => {
+// 	  // check if the error is a require error
+// 	  if (error.toString().includes('revert')) {
+// 		// get the error message from the transaction receipt
+// 		web3.eth.getTransactionReceipt(error.hashes[0], (receiptError, receipt) => {
+// 		  if (!receiptError) {
+// 			const errorMessage = web3.utils.hexToAscii(receipt.logs[0].data);
+// 			// display the error message on your UI
+// 			console.log(errorMessage);
+// 			toast.error(errorMessage);
+// 		  }
+// 		});
+// 	  } else {
+// 		// hand
+// 		console.error(error);
+// 		toast.error(error);
+//   		}
+// 	}).on('transactionHash', (hash) => {
+// 		console.log(`Transaction hash: ${hash}`);
+// 	  })
+// 	  .on('receipt', (receipt) => {
+// 		console.log('Transaction succeeded!');
+// 		toast.success("Registration Succeeded!");
+// 		// do something on UI to indicate success
+// 	  });
+// }
+

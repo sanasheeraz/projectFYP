@@ -4,11 +4,10 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { restaurantLogin } from "../utils/interact";
 import { useSelector, useDispatch } from "react-redux";
-
 const LogIn = () => {
   const dispatch = useDispatch();
-  const { user_auth: isLoggedin, restaurant_data } = useSelector(
-    (state) => state.user_auth
+  const { rest_auth: isRLoggedin } = useSelector(
+    (state) => state.rest_auth
   );
 
   const logout = () => {
@@ -55,7 +54,7 @@ const LogIn = () => {
   };
   const handleLogInClick = async () => {
     await restaurantLogin(email, password);
-    window.location.href = "../pages/Home.js";
+
   };
 
   return (

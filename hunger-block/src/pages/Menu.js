@@ -70,150 +70,20 @@ const Menu = () => {
           <div className="row justify-content-center">
             <div className="col-lg-12 align-self-center">
               <ul className="category-menu">
+              {menu_list.length > 0 ? (
+              menu_list.map((item, i) => {
+                const { name, description, price } = item;
+                console.log(item, "items.............");
+                return (
                 <li className="category-wrap">
                   <a href="shop.html">
-                    <img src="assets/img/category/1.png" alt="category" />
-                    Ramen
+                    <img src={"https://gateway.pinata.cloud/ipfs/"+item.img} alt="category" style={{"width":"20px","height":"20px"}} />
+                    {name}
                   </a>
                 </li>
-                <li className="category-wrap">
-                  <a href="#">
-                    <img src="assets/img/category/2.png" alt="category" />
-                    Pizza
-                  </a>
-                  <div className="category-sub-menu">
-                    <div className="row">
-                      <div className="col-md-3 col-6">
-                        <div className="single-item-wrap text-center">
-                          <div className="thumb">
-                            <img
-                              src="assets/img/product/pizza/1.png"
-                              alt="img"
-                            />
-                          </div>
-                          <div className="wrap-details">
-                            <h6>
-                              <a href="shop.html">Margherita Pizza</a>
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-3 col-6">
-                        <div className="single-item-wrap text-center">
-                          <div className="thumb">
-                            <img
-                              src="assets/img/product/pizza/2.png"
-                              alt="img"
-                            />
-                          </div>
-                          <div className="wrap-details">
-                            <h6>
-                              <a href="shop.html">Maxican Pizza Test Better</a>
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-3 col-6">
-                        <div className="single-item-wrap text-center">
-                          <div className="thumb">
-                            <img
-                              src="assets/img/product/pizza/3.png"
-                              alt="img"
-                            />
-                          </div>
-                          <div className="wrap-details">
-                            <h6>
-                              <a href="shop.html">Margherita Pizza</a>
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-3 col-6">
-                        <a href="#">
-                          <img src="assets/img/ad.png" alt="img" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li className="category-wrap">
-                  <a href="#">
-                    <img src="assets/img/category/3.png" alt="category" />
-                    Burger
-                  </a>
-                  <div className="category-sub-menu">
-                    <div className="row">
-                      <div className="col-md-3 col-6">
-                        <div className="single-item-wrap text-center">
-                          <div className="thumb">
-                            <img
-                              src="assets/img/product/burger/1.png"
-                              alt="img"
-                            />
-                          </div>
-                          <div className="wrap-details">
-                            <h6>
-                              <a href="shop.html">Patty Buns Burgers</a>
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-3 col-6">
-                        <div className="single-item-wrap text-center">
-                          <div className="thumb">
-                            <img
-                              src="assets/img/product/burger/1.png"
-                              alt="img"
-                            />
-                          </div>
-                          <div className="wrap-details">
-                            <h6>
-                              <a href="shop.html">Maxican Pizza Test Better</a>
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-3 col-6">
-                        <div className="single-item-wrap text-center">
-                          <div className="thumb">
-                            <img
-                              src="assets/img/product/burger/1.png"
-                              alt="img"
-                            />
-                          </div>
-                          <div className="wrap-details">
-                            <h6>
-                              <a href="shop.html">Margherita Pizza</a>
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-3 col-6">
-                        <a href="#">
-                          <img src="assets/img/ad.png" alt="img" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li className="category-wrap">
-                  <a href="shop.html">
-                    <img src="assets/img/category/4.png" alt="category" />
-                    French fries
-                  </a>
-                </li>
-                <li className="category-wrap">
-                  <a href="shop.html">
-                    <img src="assets/img/category/5.png" alt="category" />
-                    Fast food
-                  </a>
-                </li>
-                <li className="category-wrap">
-                  <a href="shop.html">
-                    <img src="assets/img/category/6.png" alt="category" />
-                    Soft drinks
-                  </a>
-                </li>
+                );
+              })
+            ) : ('')}
               </ul>
             </div>
           </div>
@@ -224,17 +94,22 @@ const Menu = () => {
       <section className="populer-area pd-top-50 pd-bottom-120">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-4 col-md-6">
+            {menu_list.length > 0 ? (
+              menu_list.map((item, i) => {
+                const { name, description, price } = item;
+                console.log(item, "items.............");
+                return (
+                  <div className="col-lg-4 col-md-6"  key={i}>
               <div className="single-item-wrap">
                 <div className="thumb">
-                  <img src="assets/img/product/pizza/1.png" alt="img" />
+                  <img src={"https://gateway.pinata.cloud/ipfs/"+item.img} alt="img" />
                   <a className="fav-btn" href="#">
                     <i className="ri-heart-line" />
                   </a>
                 </div>
                 <div className="wrap-details">
                   <h5>
-                    <a href="single-product.html">Margherita Pizza</a>
+                    <a href="single-product.html">{name}</a>
                   </h5>
                   <div className="wrap-footer">
                     <div className="rating">
@@ -248,7 +123,7 @@ const Menu = () => {
                       </span>
                       (200)
                     </div>
-                    <h6 className="price">$17.00</h6>
+                    <h6 className="price">{price}</h6>
                   </div>
                 </div>
                 <div className="btn-area">
@@ -258,282 +133,11 @@ const Menu = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/pizza/2.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">Maxican Pizza Test Better</a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (928)
-                    </div>
-                    <h6 className="price">$29.00</h6>
-                  </div>
-                  <div className="btn-area">
-                    <a className="btn btn-secondary" href="single-product.html">
-                      CHOOSE OPTIONS{" "}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/pizza/3.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">
-                      Roasted Garlic Chicken Pizza{" "}
-                    </a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (462)
-                    </div>
-                    <h6 className="price">$27.00</h6>
-                  </div>
-                </div>
-                <div className="btn-area">
-                  <a className="btn btn-secondary" href="single-product.html">
-                    CHOOSE OPTIONS{" "}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/pizza/4.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">All Season Gulliver Pizza</a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (462)
-                    </div>
-                    <h6 className="price">$29.00</h6>
-                  </div>
-                </div>
-                <div className="btn-area">
-                  <a className="btn btn-secondary" href="single-product.html">
-                    CHOOSE OPTIONS{" "}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/pizza/5.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">Chicken Fajita Pizza Large</a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (200)
-                    </div>
-                    <h6 className="price">$29.00</h6>
-                  </div>
-                  <div className="btn-area">
-                    <a className="btn btn-secondary" href="single-product.html">
-                      CHOOSE OPTIONS{" "}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/pizza/6.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">
-                      BBQ Chicken Classic Pizza Large
-                    </a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (602)
-                    </div>
-                    <h6 className="price">$27.00</h6>
-                  </div>
-                </div>
-                <div className="btn-area">
-                  <a className="btn btn-secondary" href="single-product.html">
-                    CHOOSE OPTIONS{" "}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/burger/1.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">Patty Buns Burgers</a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (462)
-                    </div>
-                    <h6 className="price">$27.00</h6>
-                  </div>
-                </div>
-                <div className="btn-area">
-                  <a className="btn btn-secondary" href="single-product.html">
-                    CHOOSE OPTIONS{" "}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/burger/2.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">Double Burger</a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (928)
-                    </div>
-                    <h6 className="price">$29.00</h6>
-                  </div>
-                  <div className="btn-area">
-                    <a className="btn btn-secondary" href="single-product.html">
-                      CHOOSE OPTIONS{" "}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="single-item-wrap">
-                <div className="thumb">
-                  <img src="assets/img/product/burger/1.png" alt="img" />
-                  <a className="fav-btn" href="#">
-                    <i className="ri-heart-line" />
-                  </a>
-                </div>
-                <div className="wrap-details">
-                  <h5>
-                    <a href="single-product.html">Patty Buns Burgers</a>
-                  </h5>
-                  <div className="wrap-footer">
-                    <div className="rating">
-                      4.9
-                      <span className="rating-inner">
-                        <i className="ri-star-fill ps-0" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-fill" />
-                        <i className="ri-star-half-line pe-0" />
-                      </span>
-                      (462)
-                    </div>
-                    <h6 className="price">$27.00</h6>
-                  </div>
-                </div>
-                <div className="btn-area">
-                  <a className="btn btn-secondary" href="single-product.html">
-                    CHOOSE OPTIONS{" "}
-                  </a>
-                </div>
-              </div>
-            </div>
+                );
+              })
+            ) : (
+              <h1>Loading...</h1>
+            )}
             <div className="col-12">
               <nav>
                 <ul className="pagination">

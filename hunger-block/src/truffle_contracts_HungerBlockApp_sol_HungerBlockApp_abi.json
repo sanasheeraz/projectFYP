@@ -105,9 +105,14 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "measuringUnit",
-						"type": "uint256"
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "menuImage",
+						"type": "string"
 					},
 					{
 						"internalType": "address",
@@ -181,6 +186,11 @@
 						"internalType": "bool",
 						"name": "registered",
 						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "restImage",
+						"type": "string"
 					}
 				],
 				"internalType": "struct HungerBlockApp.Restaurant[]",
@@ -412,9 +422,14 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "_measuringUnit",
-				"type": "uint256"
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_menuImage",
+				"type": "string"
 			}
 		],
 		"name": "registerMenuItem",
@@ -447,6 +462,11 @@
 			{
 				"internalType": "string",
 				"name": "_password",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_restImage",
 				"type": "string"
 			}
 		],
@@ -499,6 +519,11 @@
 				"internalType": "bool",
 				"name": "registered",
 				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "restImage",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",

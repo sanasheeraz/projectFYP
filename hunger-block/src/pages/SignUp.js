@@ -4,8 +4,14 @@ import Navbar from '../component/Navbar'
 import Footer from '../component/Footer';
 import { addCustomer,customerLogin } from '../utils/interact';
 import * as Components from '../component/Form';
+import { useSelector, useDispatch } from "react-redux";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const { user_auth: isLoggedin } = useSelector(
+    (state) => state.user_auth
+  );
+
   const [signIn, toggle] = React.useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

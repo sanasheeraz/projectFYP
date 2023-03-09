@@ -21,15 +21,15 @@ contract HungerBlockApp
         string restDescription; 
         bool status;
         bool registered;
-        //image
+        string restImage;
     }
     struct MenuItem{
         uint256 menuId;
         string menuItem; // dish/receipe name
         string menuDescription;
         uint menuPrice;
-        uint measuringUnit;    // kg, per plate
-        //image
+        string measuringUnit;    // kg, per plate
+        string menuImage;
         address restId; //restaurant ID
         bool status;
     }
@@ -61,7 +61,7 @@ contract HungerBlockApp
     mapping(uint => Invoice) public invoices; //array of items 
     uint public orderCount = 0;
 
-    function registerRestaurant(string memory _restName,string memory _restLocation,string memory _restDescription,string memory _email,string memory _password) public{
+    function registerRestaurant(string memory _restName,string memory _restLocation,string memory _restDescription,string memory _email,string memory _password,string memory _restImage) public{
         require(!restaurants[msg.sender].registered, "Restaurant is already registered.");
         bool exist=false;
         for (uint i = 0; i < myRestaurants.length; i++) {
@@ -73,9 +73,9 @@ contract HungerBlockApp
             }
         }
         require(!exist,"Email is already exist");
-        restaurants[msg.sender]=Restaurant(_restName,_email,_password,_restLocation,_restDescription,true,true);
+        restaurants[msg.sender]=Restaurant(_restName,_email,_password,_restLocation,_restDescription,true,true,_restImage);
         myRestaurants.push(msg.sender);
-        
+
     }
 
     function registerCustomer(string memory _custName,string memory _custEmail,string memory _custPassword) public{
@@ -151,10 +151,10 @@ contract HungerBlockApp
         counter++;
         return counter;
     }
-    function registerMenuItem(string memory _menuItem,string memory _menuDescription,uint _menuPrice,uint _measuringUnit) public{
+    function registerMenuItem(string memory _menuItem,string memory _menuDescription,uint _menuPrice,string memory _measuringUnit,string memory _menuImage) public{
         //only restaurant owner can add item
         // menuId[randomCounter]
-        menuItems.push(MenuItem(getNextValue(),_menuItem,_menuDescription,_menuPrice,_measuringUnit,msg.sender,true));
+        menuItems.push(MenuItem(getNextValue(),_menuItem,_menuDescription,_menuPrice,_measuringUnit,_menuImage,msg.sender,true));
     }
 
     //restaurantID , array of menuitems , price of each item, total amount

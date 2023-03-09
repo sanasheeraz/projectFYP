@@ -14,8 +14,12 @@ const Navbar = () => {
   const {
     user_auth: isLoggedin,
     user_data,
-    restaurant_data,
   } = useSelector((state) => state.user_auth);
+
+  const {
+    rest_auth: isRLoggedin,
+    rest_data,
+  } = useSelector((state) => state.rest_auth);
 
   //   const [isLoggedin, setIsLoggedin] = useState(false);
   const [state, setState] = useState({
@@ -24,9 +28,16 @@ const Navbar = () => {
   // const notify = (msg) => toast.info(msg, { autoClose: 7000 });
   const logout = () => {
     sessionStorage.removeItem("user_data");
-    sessionStorage.removeItem("restaurant_data");
+    sessionStorage.removeItem("rest_data");
     dispatch({
       type: "SET_USER_DATA",
+      payload: {
+        data: null,
+        auth: false,
+      },
+    });
+    dispatch({
+      type: "SET_REST_DATA",
       payload: {
         data: null,
         auth: false,
@@ -38,6 +49,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const user = sessionStorage.getItem("user_data");
+    const rest_user = sessionStorage.getItem("rest_data");
     if (user) {
       dispatch({
         type: "SET_USER_DATA",
@@ -46,12 +58,12 @@ const Navbar = () => {
           auth: true,
         },
       });
-    } else {
+    } else if (rest_user) {
       dispatch({
-        type: "SET_USER_DATA",
+        type: "SET_REST_DATA",
         payload: {
-          data: null,
-          auth: false,
+          data: rest_user,
+          auth: true,
         },
       });
     }
@@ -77,22 +89,12 @@ const Navbar = () => {
               <ul className="navbar-nav menu-open">
                 <li className="current-menu-item">
                   <Link to={"/"}>HOME</Link>
-                  {/* <ul className="sub-menu ps-0">
-                                            <li><Link to={"/"}>Home 01</Link>
-                                                </li>
-                                        </ul> */}
                 </li>
                 <li className="current-menu-item menu-item-has-children">
                   <Link to={"#"}>PAGES</Link>
                   <ul className="sub-menu ps-0">
                     <li>
                       <Link to={"/about"}>About</Link>
-                    </li>
-                    <li>
-                      <Link to={"/blog"}>Blog</Link>
-                    </li>
-                    <li>
-                      <Link to={"/blog-details"}>Blog Details</Link>
                     </li>
                     <li>
                       <Link to={"/menu"}>Menu</Link>
@@ -102,9 +104,6 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link to={"/restaurants"}>Restaurants</Link>
-                    </li>
-                    <li>
-                      <Link to={"/single-product"}>Shop Details</Link>
                     </li>
                     <li>
                       <Link to={"/cart"}>Cart</Link>
@@ -149,39 +148,48 @@ const Navbar = () => {
                 <li>49.50 $</li>
               </ul>
             </div>
+            <div className="collapse navbar-collapse" id="themefie_main_menu">
+              <ul className="navbar-nav menu-open">
+              {(isRLoggedin)?<li className="current-menu-item menu-item-has-children">
+                  <Link to={"#"}>RESTAURANTS</Link>
+                  <ul className="sub-menu ps-0">
+                    <li><Link to={"/addItem"}>Add Menu Item</Link></li>
+                  </ul>
+                  </li>:""}
+                {(isLoggedin || isRLoggedin) ? (
+                  <>
+               <li className="current-menu-item" >
+                  Welcome {rest_data ? rest_data : user_data?user_data:""}</li>
+                  <li onClick={() => logout()}>Logout</li>
+                  </>
+                ) : (
+                  <>
+                  <li><Link to={"/signup"}>CUSTOMER</Link></li>
+                  <li className="current-menu-item menu-item-has-children">
+                  <Link to={"#"}>RESTAURANTS</Link>
+                  <ul className="sub-menu ps-0">
+                    <li>
+                      <Link to={"/login"}>LOGIN</Link>
+                    </li>
+                    <li>
+                      <Link to={"/register_restaurant"}>SIGNUP</Link>
+                    </li>
+                  </ul>
+                  </li>
+                </>
+                )}
+                
+              </ul>
+            </div>
             <div className="nav-right-part nav-right-part-desktop">
               <ul>
-                <li>
-                  <Link className="search" to={"#"}>
-                    {" "}
-                    <i className="ri-search-line"></i>
-                  </Link>
-                </li>
-                {isLoggedin ? (
-                  <li className="phone-contact">
-                    <button onClickCapture={logout}>LOGOUT</button>
-                  </li>
-                ) : (
-                  <li className="phone-contact">
-                    <Link to={"/login"}>LOGIN</Link>
-                  </li>
-                )}
-                {isLoggedin ? (
-                  <li>Welcome {user_data ? user_data : ""}</li>
-                ) : (
-                  <li className="phone-contact">
-                    <Link to={"/signup"}>CUSTOMER</Link>
-                  </li>
-                )}
-                <li className="phone-contact">
-                  <Link to={"/register_restaurant"}>RESTAURANT</Link>
-                </li>
-                <li className="menu-cart">
+                
+                {/* <li className="menu-cart">
                   <Link to={"/cart"}>
                     CART <span>1</span>
                   </Link>
                 </li>
-                <li>49.50 $</li>
+                <li>49.50 $</li> */}
               </ul>
             </div>
           </div>

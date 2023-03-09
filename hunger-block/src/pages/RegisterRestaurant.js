@@ -8,6 +8,7 @@ import axios from 'axios';
 const RegisterRestaurant = () => {
     
   const [image, setImage] = useState('../assets/img/restLogo.png');
+  const [imageDisplay, setDisplay] = useState('../assets/img/restLogo.png');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +16,7 @@ const RegisterRestaurant = () => {
   const [description, setDescription] = useState('');
 
   const handleImageChange = (e) => {
+    setDisplay(URL.createObjectURL(e.target.files[0]));
     setImage(e.target.files[0]);
   };
   const handleNameChange = (event) => {
@@ -36,12 +38,12 @@ const RegisterRestaurant = () => {
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
     const apiKey = '9533338c7123d2c593ff';
     const apiSecret = 'b7de55fd0f28fa4aef8bf022fc06d349f351660172b5b191cd31ad7b3a5d84ac';
-    const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJkOTkxMGNmNC01ODE3LTRiYzAtYmYwOC0zMDkyNWIyYWY0ZDEiLCJlbWFpbCI6ImJhdGNoMTcxMGMxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI5NTMzMzM4YzcxMjNkMmM1OTNmZiIsInNjb3BlZEtleVNlY3JldCI6ImI3ZGU1NWZkMGYyOGZhNGFlZjhiZjAyMmZjMDZkMzQ5ZjM1MTY2MDE3MmI1YjE5MWNkMzFhZDdiM2E1ZDg0YWMiLCJpYXQiOjE2NzgyOTQ4NTB9.1-LQHiuxr94YuJNBOYQmpnKuds5cZnI_OgQN30YMphQ`
+    //const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJkOTkxMGNmNC01ODE3LTRiYzAtYmYwOC0zMDkyNWIyYWY0ZDEiLCJlbWFpbCI6ImJhdGNoMTcxMGMxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI5NTMzMzM4YzcxMjNkMmM1OTNmZiIsInNjb3BlZEtleVNlY3JldCI6ImI3ZGU1NWZkMGYyOGZhNGFlZjhiZjAyMmZjMDZkMzQ5ZjM1MTY2MDE3MmI1YjE5MWNkMzFhZDdiM2E1ZDg0YWMiLCJpYXQiOjE2NzgyOTQ4NTB9.1-LQHiuxr94YuJNBOYQmpnKuds5cZnI_OgQN30YMphQ`
   
   // create a FormData object to send the file
   const data = new FormData();
   data.append('file', image);
-
+  
   try {
     // send the POST request to Pinata
     const response = await axios.post(url, data, {
@@ -52,9 +54,12 @@ const RegisterRestaurant = () => {
         pinata_secret_api_key: apiSecret,
       },
     });
-console.log(response);
+    console.log(response);
+    var img = response.data.IpfsHash;
+    console.log("Image Uploaded "+img);
+    await addRestaurant(name,location,description,email,password,img);
     // return the IPFS hash of the pinned file
-    return response;
+    //return response;
   } catch (error) {
     console.error(error);
   }
@@ -62,8 +67,11 @@ console.log(response);
   };
   const handleSignUpClick = async () => {
     //https://gateway.pinata.cloud/ipfs/Qmf6ukCP4TLBezPcPC8JkHBbhYwxjd4tHWvA2eFCqa5RhJ
-    console.log("Image Uploaded "+pinFileToIPFS());
-    await addRestaurant(name,location,description,email,password);
+    // console.log("Image Uploaded "+pinFileToIPFS());
+    await pinFileToIPFS();
+    // console.log(img)
+    // await addRestaurant(name,location,description,email,password,img);
+
   };
   
   return (
@@ -103,7 +111,7 @@ console.log(response);
                 <div className="row">
                     <div className="col-md-12">
                       <div className='col-md-6'>
-                        <img src={image}/>
+                        <img src={imageDisplay}/>
                       </div>
                       <div className='col-md-6'>
                       <input type="file" accept="image/*" onChange={handleImageChange} />
