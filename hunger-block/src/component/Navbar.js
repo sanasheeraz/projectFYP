@@ -24,7 +24,6 @@ const Navbar = () => {
     isVisible: false,
   });
   // const notify = (msg) => toast.info(msg, { autoClose: 7000 });
-  // login krain  meine just abi apki wali file replace ki to uski wja se issue aa raha mein change kr k phir run krti hun
 
   const logout = () => {
     sessionStorage.removeItem("user_data");

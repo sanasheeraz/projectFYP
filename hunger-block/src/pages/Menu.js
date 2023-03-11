@@ -20,7 +20,6 @@ const Menu = () => {
     const menu_list_data = get_session_storage_menu_item();
     if (menu_list_data) {
       setmenu_list([...menu_list_data]);
-      // now we are getting data in menu_list state ....lakin yahn b result mein menu ka data nhi aa raha transaction has aa araha...
     }
   }, []);
 

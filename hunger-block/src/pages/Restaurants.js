@@ -13,7 +13,7 @@ const Restaurants = () => {
     console.log({ get_rest_list });
 
     return JSON.parse(get_rest_list);
-    //aa gya data,,,,
+    
   };
 
   useEffect(() => {
