@@ -5,11 +5,12 @@ import Footer from '../component/Footer'
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types'
 // bring connect from react-redux, it's the bridge for connecting component to redux
-import { connect } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import * as actions from "../store/Auth/actions"
 import { makeSelectPostsList } from "../store/Auth/selector"
 
 export const Home = (props) => {
+    
     
     const { postsList, getPostsList } = props;
 

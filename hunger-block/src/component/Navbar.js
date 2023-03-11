@@ -11,21 +11,21 @@ import {
 } from "../utils/interact";
 const Navbar = () => {
   const dispatch = useDispatch();
-  const {
-    user_auth: isLoggedin,
-    user_data,
-  } = useSelector((state) => state.user_auth);
+  const { user_auth: isLoggedin, user_data } = useSelector(
+    (state) => state.user_auth
+  );
 
-  const {
-    rest_auth: isRLoggedin,
-    rest_data,
-  } = useSelector((state) => state.rest_auth);
+  const { rest_auth: isRLoggedin, rest_data } = useSelector(
+    (state) => state.rest_auth
+  );
 
   //   const [isLoggedin, setIsLoggedin] = useState(false);
   const [state, setState] = useState({
     isVisible: false,
   });
   // const notify = (msg) => toast.info(msg, { autoClose: 7000 });
+  // login krain  meine just abi apki wali file replace ki to uski wja se issue aa raha mein change kr k phir run krti hun
+
   const logout = () => {
     sessionStorage.removeItem("user_data");
     sessionStorage.removeItem("rest_data");
@@ -47,27 +47,9 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  useEffect(() => {
-    const user = sessionStorage.getItem("user_data");
-    const rest_user = sessionStorage.getItem("rest_data");
-    if (user) {
-      dispatch({
-        type: "SET_USER_DATA",
-        payload: {
-          data: user,
-          auth: true,
-        },
-      });
-    } else if (rest_user) {
-      dispatch({
-        type: "SET_REST_DATA",
-        payload: {
-          data: rest_user,
-          auth: true,
-        },
-      });
-    }
-  }, []);
+  const liStyle = {
+    color: "white",
+  };
 
   return (
     <div>
@@ -150,40 +132,50 @@ const Navbar = () => {
             </div>
             <div className="collapse navbar-collapse" id="themefie_main_menu">
               <ul className="navbar-nav menu-open">
-              {(isRLoggedin)?<li className="current-menu-item menu-item-has-children">
-                  <Link to={"#"}>RESTAURANTS</Link>
-                  <ul className="sub-menu ps-0">
-                    <li><Link to={"/addItem"}>Add Menu Item</Link></li>
-                  </ul>
-                  </li>:""}
-                {(isLoggedin || isRLoggedin) ? (
+                {isRLoggedin ? (
+                  <li className="current-menu-item menu-item-has-children">
+                    <Link to={"#"}>RESTAURANTS</Link>
+                    <ul className="sub-menu ps-0">
+                      <li>
+                        <Link to={"/addItem"}>Add Menu Item</Link>
+                      </li>
+                    </ul>
+                  </li>
+                ) : (
+                  ""
+                )}
+                {isLoggedin || isRLoggedin ? (
                   <>
-               <li className="current-menu-item" >
-                  Welcome {rest_data ? rest_data : user_data?user_data:""}</li>
-                  <li onClick={() => logout()}>Logout</li>
+                    <li className="current-menu-item" style={liStyle}>
+                      Welcome{" "}
+                      {rest_data ? rest_data : user_data ? user_data : ""}
+                    </li>
+                    <li onClick={() => logout()} style={liStyle}>
+                      Logout
+                    </li>
                   </>
                 ) : (
                   <>
-                  <li><Link to={"/signup"}>CUSTOMER</Link></li>
-                  <li className="current-menu-item menu-item-has-children">
-                  <Link to={"#"}>RESTAURANTS</Link>
-                  <ul className="sub-menu ps-0">
                     <li>
-                      <Link to={"/login"}>LOGIN</Link>
+                      <Link to={"/signup"}>CUSTOMER</Link>
                     </li>
-                    <li>
-                      <Link to={"/register_restaurant"}>SIGNUP</Link>
+                    <li className="current-menu-item menu-item-has-children">
+                      <Link to={"#"}>RESTAURANTS</Link>
+                      <ul className="sub-menu ps-0">
+                        <li>
+                          <Link to={"/login"}>LOGIN</Link>
+                        </li>
+                        <li>
+                          <Link to={"/register_restaurant"}>SIGNUP</Link>
+                        </li>
+                      </ul>
                     </li>
-                  </ul>
-                  </li>
-                </>
+                  </>
                 )}
-                
               </ul>
             </div>
             <div className="nav-right-part nav-right-part-desktop">
               <ul>
-                
                 {/* <li className="menu-cart">
                   <Link to={"/cart"}>
                     CART <span>1</span>

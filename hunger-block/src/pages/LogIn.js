@@ -4,11 +4,10 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { restaurantLogin } from "../utils/interact";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const LogIn = () => {
   const dispatch = useDispatch();
-  const { rest_auth: isRLoggedin } = useSelector(
-    (state) => state.rest_auth
-  );
+  const { rest_auth: isRLoggedin } = useSelector((state) => state.rest_auth);
 
   const logout = () => {
     sessionStorage.removeItem("restaurant_data");
@@ -42,6 +41,7 @@ const LogIn = () => {
       });
     }
   }, []);
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,9 +54,16 @@ const LogIn = () => {
   };
   const handleLogInClick = async () => {
     await restaurantLogin(email, password);
-
   };
 
+  const { user_auth } = useSelector((state) => state.user_auth);
+  const { rest_auth } = useSelector((state) => state.rest_auth);
+
+  useEffect(() => {
+    if (user_auth || rest_auth) {
+      navigate("/");
+    }
+  }, [user_auth, rest_auth]);
   return (
     <div>
       {/* navbar start */}

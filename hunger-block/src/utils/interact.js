@@ -7,21 +7,21 @@ require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3(window.ethereum);
 const contractABI = require("../truffle_contracts_HungerBlockApp_sol_HungerBlockApp_abi.json");
-const contractAddress = "0xde64c5c578ad30e063c2e9F6BC3ce305af4Aa8FB"; //my account address --ganache
+const contractAddress = "0xB3D262c11195a0A2c720e5c2F910b6753d082b23"; //my account address --ganache
 // const contractAddress = "0x03BfCF295046d12978b210948785cA3F85a392f4"
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9
 let theTxHash = "";
 
-const set_menu_item = (menu_item) => {
+export const set_data_in_storage = (menu_item, storage_constants) => {
   let get_items = [];
-  get_items = sessionStorage.getItem(USER_MENU_ITEM)
-    ? JSON.parse(sessionStorage.getItem(USER_MENU_ITEM))
+  get_items = sessionStorage.getItem(storage_constants)
+    ? JSON.parse(sessionStorage.getItem(storage_constants))
     : [];
-
+  storage_constants();
   get_items.push(menu_item);
 
-  sessionStorage.setItem(USER_MENU_ITEM, JSON.stringify(get_items));
+  sessionStorage.setItem(storage_constants, JSON.stringify(get_items));
 };
 const set_rest_list = (rest_data) => {
   let get_list = [];
@@ -255,7 +255,8 @@ export const addRestaurant = async (
   await Promise.all(rowResolvers);
 
   window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
-  const theABIData = window.contract.methods.registerRestaurant(name, location, description, email, password,img)
+  const theABIData = window.contract.methods
+    .registerRestaurant(name, location, description, email, password, img)
     .send({ from: selectedAccount })
     .on("error", (error) => {
       // check if the error is a require error
@@ -289,7 +290,7 @@ export const addRestaurant = async (
     });
 };
 
-export const addMenuItem = async (name, description, price, unit,img) => {
+export const addMenuItem = async (name, description, price, unit, img) => {
   //toast.info("Registering..");
   // Get list of accounts of the connected wallet
   const accounts = await web3.eth.getAccounts();
@@ -308,7 +309,7 @@ export const addMenuItem = async (name, description, price, unit,img) => {
 
   window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
   const theABIData = window.contract.methods
-    .registerMenuItem(name, description, price, unit,img)
+    .registerMenuItem(name, description, price, unit, img)
     .send({ from: selectedAccount })
     .on("error", (error) => {
       // check if the error is a require error
@@ -337,7 +338,10 @@ export const addMenuItem = async (name, description, price, unit,img) => {
     .on("receipt", (receipt) => {
       console.log("Transaction succeeded!");
       toast.success("Registration Succeeded!");
-      set_menu_item({ name, description, price, unit,img });
+      set_data_in_storage(
+        { name, description, price, unit, img },
+        USER_MENU_ITEM
+      );
       console.log("receipt.....................", receipt);
       // do something on UI to indicate success wait
     });
@@ -399,4 +403,3 @@ export const get_rest_session_storage = () => {
 // 		// do something on UI to indicate success
 // 	  });
 // }
-
