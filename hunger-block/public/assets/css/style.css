@@ -4166,11 +4166,18 @@ ul.side-navbar-items li a:hover {
 
 .footer-widget .logo {
   margin-bottom: 40px;
+  
 }
 
 .contact_info_list {
   padding: 0;
   margin: 0;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 .contact_info_list .single-info-item {
   list-style: none;
@@ -4178,6 +4185,13 @@ ul.side-navbar-items li a:hover {
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 22px;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 .contact_info_list .single-info-item img {
   display: -webkit-inline-box;
@@ -4187,10 +4201,30 @@ ul.side-navbar-items li a:hover {
   height: -moz-fit-content;
   height: fit-content;
   margin-right: 13px;
+
+display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.single-info-item{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
 }
 .contact_info_list .single-info-item .details {
   font-size: 18px;
   color: #fff;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 .widget_instagram_feeds ul {

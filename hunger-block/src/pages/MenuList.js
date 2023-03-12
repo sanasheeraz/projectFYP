@@ -4,7 +4,9 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { SAVE_CART_ITEM, USER_MENU_ITEM } from "../utils/constants";
 
+
 const MenuList = () => {
+ 
   const [menu_list, setmenu_list] = useState([]);
   const get_session_storage_menu_item = () => {
     const menu_items = sessionStorage.getItem(USER_MENU_ITEM);
@@ -19,31 +21,27 @@ const MenuList = () => {
     }
   }, []);
 
-  const [cartItems, setCartItems] = useState([])
-  const addToCart = (item)=>{
-    //sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(item));
-     let get_items = [];
-     if(sessionStorage.getItem(SAVE_CART_ITEM) !== null){
-      get_items=JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM));
-     }
-     get_items.push(item);
-    //  const newItem = {...get_items}
-    // if(get_items){
-    //   setCartItems([...get_items, newItem])
-    // }
-    sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(get_items));
+  const [cartItems, setCartItems] = useState([]);
+  let get_items = [];
+  const addToCart = (item) => {
+    
+    if (sessionStorage.getItem(SAVE_CART_ITEM) !== null) {
+      get_items = JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM));
+    }
+    get_items.push(item);
+    sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(get_items));
     const addtocart_data = get_session_storage_cart_item();
     const newItem = { ...get_items, quantity: 1 };
-    if(addtocart_data){
+    if (addtocart_data) {
       setCartItems([...addtocart_data, newItem]);
     }
-
-  }
+  window.location.reload()
+  };
   const get_session_storage_cart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
     return JSON.parse(cart_items);
   };
-
+  
 
   return (
     <div>
@@ -102,7 +100,7 @@ const MenuList = () => {
             {menu_list.length > 0 ? (
               menu_list.map((item, i) => {
                 //const { name, description, price } = item;
-                const id=item[0];
+                const id = item[0];
                 const name = item[1];
                 const description = item[2];
                 const price = item[3];
@@ -116,7 +114,7 @@ const MenuList = () => {
                       <div className="media">
                         <div className="thumb">
                           <img
-                            src={"https://gateway.pinata.cloud/ipfs/"+image}
+                            src={"https://gateway.pinata.cloud/ipfs/" + image}
                             alt="img"
                           />
                         </div>
@@ -127,8 +125,21 @@ const MenuList = () => {
                           <p>{description}</p>
                           <div className="wrap-footer">
                             <h6 className="price">{item[3]}</h6>
-                            <button type="submit" className="btn btn-secondary" 
-                            onClick={()=>{addToCart({id,name, description, price,unit,image,quantity})}}>
+                            <button
+                              type="submit"
+                              className="btn btn-secondary"
+                              onClick={() => {
+                                addToCart({
+                                  id,
+                                  name,
+                                  description,
+                                  price,
+                                  unit,
+                                  image,
+                                  quantity,
+                                });
+                              }}
+                            >
                               ADD TO CART
                             </button>
                           </div>

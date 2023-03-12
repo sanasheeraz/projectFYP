@@ -76,8 +76,8 @@ const Menu = () => {
                 return (
                 <li className="category-wrap">
                   <a href="shop.html">
-                    <img src={"https://gateway.pinata.cloud/ipfs/"+item.img} alt="category" style={{"width":"20px","height":"20px"}} />
-                    {name}
+                    <img src={"https://gateway.pinata.cloud/ipfs/"+item[5]} alt="category" style={{"width":"20px","height":"20px"}} />
+                    {item[1]}
                   </a>
                 </li>
                 );
@@ -101,14 +101,14 @@ const Menu = () => {
                   <div className="col-lg-4 col-md-6"  key={i}>
               <div className="single-item-wrap">
                 <div className="thumb">
-                  <img src={"https://gateway.pinata.cloud/ipfs/"+item.img} alt="img" />
+                  <img src={"https://gateway.pinata.cloud/ipfs/"+item[5]} alt="img" />
                   <a className="fav-btn" href="#">
                     <i className="ri-heart-line" />
                   </a>
                 </div>
                 <div className="wrap-details">
                   <h5>
-                    <a href="single-product.html">{name}</a>
+                    <a href="single-product.html">{item[1]}</a>
                   </h5>
                   <div className="wrap-footer">
                     <div className="rating">
@@ -122,7 +122,7 @@ const Menu = () => {
                       </span>
                       (200)
                     </div>
-                    <h6 className="price">{price}</h6>
+                    <h6 className="price">{item[3]}</h6>
                   </div>
                 </div>
                 <div className="btn-area">

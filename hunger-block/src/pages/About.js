@@ -72,15 +72,7 @@ const About = () => {
               <div className="col-lg-6">
                 <div className="section-title text-center text-lg-start">
                   <h3 className="sub-title">Why choose us </h3>
-                  <div>
-      <button className="btn btn-primary rounded-pill" onClick={AllRestaurants}>
-					Restaurants
-				</button>
-        <button className="btn btn-primary rounded-pill" onClick={onGet}>
-					Customers
-				</button>
-			</div>
-                  <h2 className="title">Why we are the best</h2>
+                   <h2 className="title">Why we are the best</h2>
                   <p>A, blandit euismod ullamcorper vestibulum enim habitasse. Ultrices tincidunt scelerisque elit enim. A neque malesuada in tortor eget justo mauris nec dolor. Consequat risus vitae, ac ac et preparation. He wanted to serve burgers, fries and beverages that tasted .</p>
                 </div>
                 <div className="row">
