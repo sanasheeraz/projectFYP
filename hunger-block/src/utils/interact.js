@@ -12,17 +12,28 @@ const contractAddress = "0xB3D262c11195a0A2c720e5c2F910b6753d082b23"; //my accou
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9
 let theTxHash = "";
-
-export const set_data_in_storage = (menu_item, storage_constants) => {
+const set_menu_item = (menu_item) => {
   let get_items = [];
-  get_items = sessionStorage.getItem(storage_constants)
-    ? JSON.parse(sessionStorage.getItem(storage_constants))
+  get_items = sessionStorage.getItem(USER_MENU_ITEM)
+    ? JSON.parse(sessionStorage.getItem(USER_MENU_ITEM))
     : [];
-  storage_constants();
+
   get_items.push(menu_item);
 
-  sessionStorage.setItem(storage_constants, JSON.stringify(get_items));
+  sessionStorage.setItem(USER_MENU_ITEM, JSON.stringify(get_items));
 };
+
+
+// export const set_data_in_storage = (menu_item, storage_constants) => {
+//   let get_items = [];
+//   get_items = sessionStorage.getItem(storage_constants)
+//     ? JSON.parse(sessionStorage.getItem(storage_constants))
+//     : [];
+//   storage_constants();
+//   get_items.push(menu_item);
+
+//   sessionStorage.setItem(storage_constants, JSON.stringify(get_items));
+// };
 const set_rest_list = (rest_data) => {
   let get_list = [];
   get_list = sessionStorage.getItem(USER_REST_LIST)
@@ -338,11 +349,13 @@ export const addMenuItem = async (name, description, price, unit, img) => {
     .on("receipt", (receipt) => {
       console.log("Transaction succeeded!");
       toast.success("Registration Succeeded!");
-      set_data_in_storage(
-        { name, description, price, unit, img },
-        USER_MENU_ITEM
-      );
+      // set_data_in_storage(
+      //   { name, description, price, unit, img },
+      //   USER_MENU_ITEM
+      // );
+      set_menu_item({ name, description, price, unit });
       console.log("receipt.....................", receipt);
+      // console.log("receipt.....................", receipt);
       // do something on UI to indicate success wait
     });
 };
@@ -360,6 +373,7 @@ export const getMenuItems = async () => {
           console.log("data......................", results[i]);
         }
         const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM);
+        // const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM);
         // }
       }
     });
@@ -374,7 +388,7 @@ export const get_rest_session_storage = () => {
   const rest_data = sessionStorage.getItem("restaurant_data");
   return rest_data;
 };
-// name ka parameter nhi to name nhi aye ga jb signup krte hein to name parameter pas krt rhe login ya signin pe name parameter pas hi nhi kiya
+
 // 	window.contract = await new web3.eth.Contract(contractABI, contractAddress); //loadContract();
 // 	const theABIData = window.contract.methods.registerMenuItem(name,description,price,unit).send({from:selectedAccount})
 // 	.on('error', (error) => {

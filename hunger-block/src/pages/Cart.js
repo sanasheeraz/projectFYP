@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
+import { SAVE_CART_ITEM } from "../utils/constants";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const get_session_storage_addtocart_item = () => {
+    const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
+    console.log({ cart_items });
 
-  const addToCart = (item) => {
-    const newItem = { ...item, quantity: 1 };
-    setCartItems([...cartItems, newItem]);
+    return JSON.parse(cart_items);
   };
+  useEffect(() => {
+    const addtocart_data = get_session_storage_addtocart_item();
+    if (addtocart_data) {
+      setCartItems([...addtocart_data]);
+    }
+  }, []);
+  console.log("cart items================>", cartItems);
+
+  // const addToCart = (item) => {
+  //   const newItem = { ...item, quantity: 1 };
+  //   setCartItems([...cartItems, newItem]);
+  // };
 
   return (
     <div>

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
-import { USER_MENU_ITEM } from "../utils/constants";
+import { SAVE_CART_ITEM, USER_MENU_ITEM } from "../utils/constants";
 const MenuList = () => {
   const [menu_list, setmenu_list] = useState([]);
 
@@ -19,8 +19,39 @@ const MenuList = () => {
       setmenu_list([...menu_list_data]);
     }
   }, []);
+  
 
   console.log("menu_list================>", menu_list);
+
+  const [cartItems, setCartItems] = useState([])
+  const addToCart = (item)=>{
+    sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(item));
+     let get_items = [];
+     if(sessionStorage.getItem(SAVE_CART_ITEM) !== null){
+      JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM));
+     }
+     get_items.push(item);
+    //  const newItem = {...get_items}
+    // if(get_items){
+    //   setCartItems([...get_items, newItem])
+    // }
+     sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(get_items));
+    
+    console.log(get_items, " add to cart");
+    // const addtocart_data = get_session_storage_cart_item();
+    // const newItem = { ...get_items, quantity: 1 };
+    // if(addtocart_data){
+    // setCartItems([...addtocart_data, newItem]);
+  //}
+    
+  }
+  // const get_session_storage_cart_item = () => {
+  //   const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
+  //   console.log({ cart_items });
+
+  //   return JSON.parse(cart_items);
+  // };
+
   return (
     <div>
       {/* navbar start */}
@@ -96,7 +127,8 @@ const MenuList = () => {
                           <p>{description}</p>
                           <div className="wrap-footer">
                             <h6 className="price">{price}</h6>
-                            <button type="submit" className="btn btn-secondary">
+                            <button type="submit" className="btn btn-secondary" 
+                            onClick={()=>{addToCart({name, description, price})}}>
                               ADD TO CART
                             </button>
                           </div>
