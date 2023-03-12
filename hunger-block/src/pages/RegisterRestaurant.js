@@ -68,10 +68,8 @@ const RegisterRestaurant = () => {
   };
   const handleSignUpClick = async () => {
     //https://gateway.pinata.cloud/ipfs/Qmf6ukCP4TLBezPcPC8JkHBbhYwxjd4tHWvA2eFCqa5RhJ
-    // console.log("Image Uploaded "+pinFileToIPFS());
     await pinFileToIPFS();
-    // console.log(img)
-    // await addRestaurant(name,location,description,email,password,img);
+    navigate("/login");
   };
   const { user_auth } = useSelector((state) => state.user_auth);
   const { rest_auth } = useSelector((state) => state.rest_auth);

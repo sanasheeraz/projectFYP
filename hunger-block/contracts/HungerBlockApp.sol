@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 contract HungerBlockApp
 {
     uint256 private counter;
+    uint256 private orderCount;
+    uint256 private invoiceCount;
     struct Customer{
         // uint custId;
         string custName;
@@ -10,7 +12,7 @@ contract HungerBlockApp
         string custPassword;
         bool status;
         bool registered;
-        // address custAccAddress;
+        address custAccAddress;
     }
     struct Restaurant{
         // uint restId;
@@ -22,12 +24,13 @@ contract HungerBlockApp
         bool status;
         bool registered;
         string restImage;
+        address restAddress;
     }
     struct MenuItem{
         uint256 menuId;
         string menuItem; // dish/receipe name
         string menuDescription;
-        uint menuPrice;
+        uint256 menuPrice;
         string measuringUnit;    // kg, per plate
         string menuImage;
         address restId; //restaurant ID
@@ -35,19 +38,25 @@ contract HungerBlockApp
     }
     struct Orders{
         uint orderId;
-        uint custId;  //address
-        uint totalAmount;
-        //order_date
-        //order_time
+        address custId;  //address
+        uint256 totalAmount;
+        string order_date;
+        string deliveryAddress;
+        string contactNo;
     }
     struct Invoice{
-        uint invoiceId;
-        uint orderId; //Order Id
-        uint menuId;    //Menu Item Id
-        uint quantity;
-        uint itemPrice; //per item price at the time of order
+        uint256 invoiceId;
+        uint256 orderId; //Order Id
+        uint256 menuId;    //Menu Item Id
+        uint256 quantity;
+        uint256 itemPrice; //per item price at the time of order
     }
 
+    struct Cart{
+        uint256 menuId;   
+        uint256 quantity;
+        uint256 itemPrice;
+    }
     // Customer[] private customers;
     // Restaurant[] private restaurants;
 
@@ -57,9 +66,11 @@ contract HungerBlockApp
     address[] public myCustomers;
     //mapping(uint => MenuItem) public menuItems;  // array of menuItems
     MenuItem[] private menuItems;
-    mapping(uint => Orders) public orders;
-    mapping(uint => Invoice) public invoices; //array of items 
-    uint public orderCount = 0;
+    Orders[] private orders;
+    Invoice[] private invoices;
+    // mapping(uint => Orders) public orders;
+    // mapping(uint => Invoice) public invoices; //array of items 
+    
 
     function registerRestaurant(string memory _restName,string memory _restLocation,string memory _restDescription,string memory _email,string memory _password,string memory _restImage) public{
         require(!restaurants[msg.sender].registered, "Restaurant is already registered.");
@@ -73,9 +84,9 @@ contract HungerBlockApp
             }
         }
         require(!exist,"Email is already exist");
-        restaurants[msg.sender]=Restaurant(_restName,_email,_password,_restLocation,_restDescription,true,true,_restImage);
+        restaurants[msg.sender]=Restaurant(_restName,_email,_password,_restLocation,_restDescription,true,true,_restImage,msg.sender);
         myRestaurants.push(msg.sender);
-
+        
     }
 
     function registerCustomer(string memory _custName,string memory _custEmail,string memory _custPassword) public{
@@ -90,7 +101,7 @@ contract HungerBlockApp
             }
         }
         require(!exist,"Email is already exist");
-        customers[msg.sender]=Customer(_custName,_custEmail,_custPassword,true,true);
+        customers[msg.sender]=Customer(_custName,_custEmail,_custPassword,true,true,msg.sender);
         myCustomers.push(msg.sender);
     }
     // Method to all Customers
@@ -113,12 +124,6 @@ contract HungerBlockApp
     }
     // Method to all MenuItems
     function getMenuItems() external view returns (MenuItem[] memory) {
-        // uint256 itemCount = myItems.length;
-        // MenuItem[] memory allItems = new MenuItem[](itemCount);
-        // for (uint256 i = 0; i < restCount; i++) {
-        //     allItems[i] = menuItems[myItems[i]];
-        // }
-        // return allItems;
         return menuItems;
     }
     // Method for Customer Login
@@ -151,15 +156,32 @@ contract HungerBlockApp
         counter++;
         return counter;
     }
+    function getNextOrder() public returns (uint256) {
+        orderCount++;
+        return orderCount;
+    }
+    function getNextInvoice() public returns (uint256) {
+        invoiceCount++;
+        return invoiceCount;
+    }
     function registerMenuItem(string memory _menuItem,string memory _menuDescription,uint _menuPrice,string memory _measuringUnit,string memory _menuImage) public{
         //only restaurant owner can add item
-        // menuId[randomCounter]
         menuItems.push(MenuItem(getNextValue(),_menuItem,_menuDescription,_menuPrice,_measuringUnit,_menuImage,msg.sender,true));
     }
 
     //restaurantID , array of menuitems , price of each item, total amount
-    function placeOrder(address _restId) public{
-        // order -> msg.sender as customer Id, total amount , date
-        // invoice
+    function placeOrder(Cart[] memory cart,string memory _delivery,string memory _contact,string memory _date,uint256 _amount) public{
+        uint256 o_id=getNextOrder();
+        orders.push(Orders(o_id,msg.sender,_amount,_date,_delivery,_contact));
+        for (uint i = 0; i < cart.length; i++) {
+            uint256 in_id=getNextInvoice();
+            invoices.push(Invoice(in_id,o_id,cart[i].menuId,cart[i].quantity,cart[i].itemPrice));
+        }
+    }
+    function getOrders() external view returns (Orders[] memory) {
+        return orders;
+    }
+    function getInvoices() external view returns (Invoice[] memory) {
+        return invoices;
     }
 }

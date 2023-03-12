@@ -38,6 +38,8 @@ const Navbar = () => {
 
   const logout = () => {
     sessionStorage.removeItem("user_data");
+    sessionStorage.removeItem("SAVE_CART_ITEM");
+    sessionStorage.removeItem("myOrdersOnly");
     sessionStorage.removeItem("rest_data");
     dispatch({
       type: "SET_USER_DATA",
@@ -125,20 +127,24 @@ const Navbar = () => {
                         <Link to={"/addItem"}>Add Menu Item</Link>
                       </li>
                       <li>
-                        <Link to={"/myItems"}>My Menu Item</Link>
+                        <Link to={"/allOrders"}>My Orders</Link>
                       </li>
                     </ul>
                   </li>
                 ) : (
                   ""
                 )}
-                {isLoggedin || isRLoggedin ? (
-                  <>
+                {isLoggedin ? (
                   <li className="current-menu-item" style={liStyle}>
                     <Link to={"/cart"}>
                       CART <span style={{"height":"24px","width":"24px","borderRadius":"50%","display":"inline-block","position":"absolute","backgroundColor":"var(--secondary-color)","textAlign":"center","color":"var(--heading-color)","lineHeight":"24px","padding":"0 11px 0 8px"}}>{cartCount}</span>
                     </Link>
                   </li>
+                ) : (
+                  ""
+                )}
+                {isLoggedin || isRLoggedin ? (
+                  <>
                     <li className="current-menu-item" style={liStyle}>
                       <Link to="/myOrders">Welcome{" "}
                       {rest_data ? rest_data : user_data ? user_data : ""}</Link>

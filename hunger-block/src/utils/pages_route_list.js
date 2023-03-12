@@ -11,12 +11,26 @@ import RegisterRestaurant from "../pages/RegisterRestaurant";
 import AddItem from "../pages/AddItem";
 import MenuList from "../pages/MenuList";
 import Restaurants from "../pages/Restaurants";
-
+import Orders from "../pages/Orders";
+import MyOrders from "../pages/MyOrders";
+;
 export const pages_route_list = [
   {
     caption: "Home",
     linkTo: "/",
     element: <Home />,
+    public_routes: false,
+  },
+  {
+    caption: "Orders",
+    linkTo: "/myOrders",
+    element: <MyOrders />,
+    public_routes: false,
+  },
+  {
+    caption: "AllOrders",
+    linkTo: "/allOrders",
+    element: <Orders />,
     public_routes: false,
   },
   {

@@ -44,7 +44,7 @@ const Footer = () => {
                   <div className="footer-widget widget">
                   <ul className="contact_info_list">
                       <li className="single-info-item"></li>
-                      <div clasName="image-container">
+                      <div className="image-container">
                    <img src="assets/img/icon/location.png" alt="icon" />
                    </div>
                         <div className="details">

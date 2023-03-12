@@ -33,6 +33,11 @@
 				"internalType": "bool",
 				"name": "registered",
 				"type": "bool"
+			},
+			{
+				"internalType": "address",
+				"name": "custAccAddress",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -68,9 +73,54 @@
 						"internalType": "bool",
 						"name": "registered",
 						"type": "bool"
+					},
+					{
+						"internalType": "address",
+						"name": "custAccAddress",
+						"type": "address"
 					}
 				],
 				"internalType": "struct HungerBlockApp.Customer[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getInvoices",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "invoiceId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "orderId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "menuId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "itemPrice",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct HungerBlockApp.Invoice[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -135,6 +185,32 @@
 	},
 	{
 		"inputs": [],
+		"name": "getNextInvoice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getNextOrder",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getNextValue",
 		"outputs": [
 			{
@@ -144,6 +220,51 @@
 			}
 		],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getOrders",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "orderId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "custId",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "order_date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "deliveryAddress",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contactNo",
+						"type": "string"
+					}
+				],
+				"internalType": "struct HungerBlockApp.Orders[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -191,50 +312,16 @@
 						"internalType": "string",
 						"name": "restImage",
 						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "restAddress",
+						"type": "address"
 					}
 				],
 				"internalType": "struct HungerBlockApp.Restaurant[]",
 				"name": "",
 				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "invoices",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "invoiceId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "orderId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "menuId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "quantity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "itemPrice",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -327,53 +414,48 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "orderCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "orders",
-		"outputs": [
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "menuId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "itemPrice",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct HungerBlockApp.Cart[]",
+				"name": "cart",
+				"type": "tuple[]"
+			},
 			{
-				"internalType": "uint256",
-				"name": "orderId",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "_delivery",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_contact",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_date",
+				"type": "string"
 			},
 			{
 				"internalType": "uint256",
-				"name": "custId",
+				"name": "_amount",
 				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "totalAmount",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_restId",
-				"type": "address"
 			}
 		],
 		"name": "placeOrder",
@@ -524,6 +606,11 @@
 				"internalType": "string",
 				"name": "restImage",
 				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "restAddress",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",

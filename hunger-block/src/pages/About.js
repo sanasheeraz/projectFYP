@@ -6,9 +6,9 @@ const About = () => {
   const AllRestaurants = async () => {
 		await getRestaurants();
 	};
-  const onGet = async () => {
-		await getCustomers();
-	};
+  
+	getCustomers();
+	
   return (
     <div>
       

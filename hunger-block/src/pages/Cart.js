@@ -6,6 +6,7 @@ import Footer from "../component/Footer";
 import { SAVE_CART_ITEM } from "../utils/constants";
 import { toast } from "react-toastify";
 import { placeOrder } from "../utils/interact";
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
   // const dispatch = useDispatch();
   const [cartItems, setCartItems] = useState([]);
@@ -15,7 +16,7 @@ const Cart = () => {
   const [deliveryError, setDeliveryError] = useState('');
   const [total,setTotal]=useState(0);
   const [amount,setAmount]=useState(0);
-
+  const navigate = useNavigate();
   const get_session_storage_addtocart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
     console.log({ cart_items });
@@ -27,7 +28,7 @@ const Cart = () => {
       setCartItems([...addtocart_data]);
     }
   }, []);
-  console.log("cart items================>", cartItems);
+  // console.log("cart items================>", cartItems);
   const TotalPrice=(price,quantity)=>{
     return Number(price * quantity).toLocaleString('en-US');
   }
@@ -94,7 +95,16 @@ const handleDeliveryChange = (event) => {
     }
     if(!error)
     {
-      await placeOrder(cartItems,delivery,contact);
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      today = mm + '/' + dd + '/' + yyyy;
+      const cartData = cartItems.map(function(item) {
+        return { "menuId": item.id, "quantity": item.quantity ,"itemPrice":item.price};
+      });
+      await placeOrder(cartData,delivery,contact,today,amount);
+      navigate("/myOrders");
     }
  }
   return (

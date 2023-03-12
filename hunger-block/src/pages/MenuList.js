@@ -2,12 +2,18 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
+import { getMenuItems } from '../utils/interact';
 import { SAVE_CART_ITEM, USER_MENU_ITEM } from "../utils/constants";
-
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const MenuList = () => {
  
   const [menu_list, setmenu_list] = useState([]);
+  const { user_auth: isLoggedin, user_data } = useSelector(
+    (state) => state.user_auth
+  );
+  getMenuItems();
   const get_session_storage_menu_item = () => {
     const menu_items = sessionStorage.getItem(USER_MENU_ITEM);
     console.log({ menu_items });
@@ -28,14 +34,26 @@ const MenuList = () => {
     if (sessionStorage.getItem(SAVE_CART_ITEM) !== null) {
       get_items = JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM));
     }
-    get_items.push(item);
-    sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(get_items));
-    const addtocart_data = get_session_storage_cart_item();
-    const newItem = { ...get_items, quantity: 1 };
-    if (addtocart_data) {
-      setCartItems([...addtocart_data, newItem]);
+    let existed_item= get_items.find(x=> x.id === item.id);
+    if(existed_item)
+    {
+      let addedItem = get_items.find(x=> x.id === item.id);
+      addedItem.quantity+=1;
+      sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(get_items));
+      toast.info("Item Already Exist! Quantity Updated");
+      
     }
-  window.location.reload()
+    else{
+      get_items.push(item);
+      sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(get_items));
+      window.location.reload();
+    }
+    // const addtocart_data = get_session_storage_cart_item();
+    // const newItem = { ...get_items, quantity: 1 };
+    // if (addtocart_data) {
+    //   setCartItems([...addtocart_data, newItem]);
+    // }
+  
   };
   const get_session_storage_cart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
@@ -125,23 +143,28 @@ const MenuList = () => {
                           <p>{description}</p>
                           <div className="wrap-footer">
                             <h6 className="price">{item[3]}</h6>
-                            <button
-                              type="submit"
-                              className="btn btn-secondary"
-                              onClick={() => {
-                                addToCart({
-                                  id,
-                                  name,
-                                  description,
-                                  price,
-                                  unit,
-                                  image,
-                                  quantity,
-                                });
-                              }}
-                            >
-                              ADD TO CART
-                            </button>
+                            {isLoggedin ? (
+                  <button
+                  type="submit"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    addToCart({
+                      id,
+                      name,
+                      description,
+                      price,
+                      unit,
+                      image,
+                      quantity,
+                    });
+                  }}
+                >
+                  ADD TO CART
+                </button>
+                ) : (
+                  ""
+                )}
+                            
                           </div>
                         </div>
                       </div>
