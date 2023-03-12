@@ -112,7 +112,7 @@ const Navbar = () => {
             </div>
             <div className="logo">
               <Link className="main-logo" to={"./hom1"}>
-                <img src="assets/img/logo.png" alt="img" />
+                <img src="assets/img/logo@.png" alt="img" />
               </Link>
             </div>
             <div className="collapse navbar-collapse" id="themefie_main_menu">

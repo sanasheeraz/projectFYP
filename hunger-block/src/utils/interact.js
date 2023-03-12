@@ -7,7 +7,7 @@ require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3(window.ethereum);
 const contractABI = require("../truffle_contracts_HungerBlockApp_sol_HungerBlockApp_abi.json");
-const contractAddress = "0xde64c5c578ad30e063c2e9F6BC3ce305af4Aa8FB"; //my account address --ganache
+const contractAddress = "0x963aecDc0Ed7C94DF58Cb3f1a33DDFCd5F4A3508"; //my account address --ganache
 // const contractAddress = "0x03BfCF295046d12978b210948785cA3F85a392f4"
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9

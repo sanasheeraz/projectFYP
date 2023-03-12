@@ -64,7 +64,7 @@ const AddItem = () => {
   };
   const handleAddClick = async () => {
     var img = await pinFileToIPFS();
-     navigate("/");
+     navigate("/menue-list");
   };
   
   return (
