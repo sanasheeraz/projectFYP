@@ -5,6 +5,7 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { SAVE_CART_ITEM } from "../utils/constants";
 import { toast } from "react-toastify";
+import { placeOrder } from "../utils/interact";
 const Cart = () => {
   // const dispatch = useDispatch();
   const [cartItems, setCartItems] = useState([]);
@@ -12,10 +13,12 @@ const Cart = () => {
   const [delivery, setDelivery] = useState('');
   const [contactError, setContactError] = useState('');
   const [deliveryError, setDeliveryError] = useState('');
+  const [total,setTotal]=useState(0);
+  const [amount,setAmount]=useState(0);
+
   const get_session_storage_addtocart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
     console.log({ cart_items });
-
     return JSON.parse(cart_items);
   };
   useEffect(() => {
@@ -41,22 +44,33 @@ const Cart = () => {
   // };
  // //to remove the item completely
  const handleRemove = (id)=>{
-   
- }
+  let cartData = get_session_storage_addtocart_item();
+  let filtered_arr = cartData.filter( item=>item.id != id );
+  sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(filtered_arr));
+  setCartItems(filtered_arr);
+ };
  //to add the quantity
  const handleAddQuantity = (id)=>{
   let cartData = get_session_storage_addtocart_item();
   let addedItem = cartData.find(item=> item.id === id);
-  addedItem.quantity += 1 ;
+  if(addedItem.quantity<=10)
+  {
+    addedItem.quantity += 1 ;
+  }
   sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(cartData));
- }
+  setCartItems(cartData);
+ };
  //to substruct from the quantity
  const handleSubQuantity = (id)=>{
   let cartData = get_session_storage_addtocart_item();
   let addedItem = cartData.find(item=> item.id === id);
-  addedItem.quantity -= 1 ;
+  if(addedItem.quantity>1)
+  {
+    addedItem.quantity -= 1 ;
+  }
   sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(cartData));
- }
+  setCartItems(cartData);
+ };
  
  const handleContactChange = (event) => {
   setContact(event.target.value);
@@ -64,7 +78,7 @@ const Cart = () => {
 const handleDeliveryChange = (event) => {
   setDelivery(event.target.value);
 };
- const handlePlaceOrder = ()=>{
+ const handlePlaceOrder = async()=>{
     let error=false;
     if(contact==='')
     {
@@ -80,7 +94,7 @@ const handleDeliveryChange = (event) => {
     }
     if(!error)
     {
-      //smart contract
+      await placeOrder(cartItems,delivery,contact);
     }
  }
   return (
@@ -145,9 +159,9 @@ const handleDeliveryChange = (event) => {
                 return(
                     <tr key={i}>
                       <td className="table-close-btn">
-                        <a href='#'>
+                        <Link onClick={()=>handleRemove(item.id)}>
                           <i className="ri-close-line" />
-                        </a>
+                        </Link>
                       </td>
                       <th scope="row">
                         <img src={"https://gateway.pinata.cloud/ipfs/"+item.image} alt="img" style={{"height":"100px","width":"95px"}} />
@@ -171,10 +185,6 @@ const handleDeliveryChange = (event) => {
                             <input
                               type="number"
                               className="input-text qty text"
-                              step={1}
-                              min={1}
-                              max={10000}
-                              name="quantity"
                               value={item.quantity}
                             />
                             <input
@@ -186,12 +196,12 @@ const handleDeliveryChange = (event) => {
                           </div>
                         </form>
                       </td>
-                      <td>{TotalPrice(item.price,item.quantity)}</td>
+                      <td>{total==0 ? TotalPrice(item.price,item.quantity): total}</td>
                     </tr>
                     );
                   })
                 ) : (
-                  <h1>Loading...</h1>
+                  'No Item in Cart'
                 )}
                   </tbody>
                 </table>
@@ -226,17 +236,17 @@ const handleDeliveryChange = (event) => {
                 <div className="order-cart">
                   <h5>Cart totals</h5>
                   <ul>
-                    {/* <li>
-                      Subtotal<span>$50.00</span>
-                    </li> */}
                     <li className="total">
-                      Total<span>{TotalAmount()}</span>
+                      Total<span>{amount==0 ? TotalAmount(): amount}</span>
                     </li>
                   </ul>
                 </div>
-                <button className="btn btn-secondary w-100" onClick={handlePlaceOrder}>
+                {(cartItems.length===0)?<button className="btn btn-secondary w-100" onClick={handlePlaceOrder} disabled>
                   Place Order
-                </button>
+                </button>:
+                <button className="btn btn-secondary w-100" onClick={handlePlaceOrder}>
+                Place Order
+              </button>}
               </div>
             </div>
           </div>
@@ -259,17 +269,3 @@ const handleDeliveryChange = (event) => {
 };
 
 export default Cart;
-// const mapStateToProps = (state)=>{
-//     return{
-//         items: state.addedItems,
-//         //addedItems: state.addedItems
-//     }
-// }
-// const mapDispatchToProps = (dispatch)=>{
-//     return{
-//         removeItem: (id)=>{dispatch(removeItem(id))},
-//         addQuantity: (id)=>{dispatch(addQuantity(id))},
-//         subQuantity: (id)=>{dispatch(subQuantity(id))}
-//     }
-// }
-// export default connect(mapStateToProps,mapDispatchToProps)(Cart);
