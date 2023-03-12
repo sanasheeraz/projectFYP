@@ -1,10 +1,8 @@
 import React from "react";
 import About from "../pages/About";
 import Cart from "../pages/Cart";
-import CheckOut from "../pages/CheckOut";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
-import Shop from "../pages/shop";
 import Menu from "../pages/Menu";
 import SingleProduct from "../pages/SingleProduct";
 import SignUp from "../pages/SignUp";
@@ -19,12 +17,6 @@ export const pages_route_list = [
     caption: "Home",
     linkTo: "/",
     element: <Home />,
-    public_routes: false,
-  },
-  {
-    caption: "CheckOut",
-    linkTo: "/CheckOut",
-    element: <CheckOut />,
     public_routes: false,
   },
   {

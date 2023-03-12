@@ -4,39 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { SAVE_CART_ITEM } from "../utils/constants";
-import { removeItem,addQuantity,subQuantity} from '../store/action';
+import { toast } from "react-toastify";
 const Cart = () => {
   // const dispatch = useDispatch();
-  // //to remove the item completely
-  // const handleRemove = (id)=>{
-  //   console.log("removing")
-  //   dispatch({
-  //     type: "REMOVE_ITEM",
-  //     payload: {
-  //       data: id
-  //     },
-  //   });
-  // }
-  // //to add the quantity
-  // const handleAddQuantity = (id)=>{
-  //   dispatch({
-  //     type: "ADD_QUANTITY",
-  //     payload: {
-  //       data: id
-  //     },
-  //   });
-  // }
-  // //to substruct from the quantity
-  // const handleSubQuantity = (id)=>{
-  //   dispatch({
-  //     type: "SUB_QUANTITY",
-  //     payload: {
-  //       data: id
-  //     },
-  //   });
-  // }
-
   const [cartItems, setCartItems] = useState([]);
+  const [contact, setContact] = useState('');
+  const [delivery, setDelivery] = useState('');
+  const [contactError, setContactError] = useState('');
+  const [deliveryError, setDeliveryError] = useState('');
   const get_session_storage_addtocart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
     console.log({ cart_items });
@@ -64,37 +39,52 @@ const Cart = () => {
   //   const newItem = { ...item, quantity: 1 };
   //   setCartItems([...cartItems, newItem]);
   // };
- const handleSubQuantity=(id)=>{
-
+ // //to remove the item completely
+ const handleRemove = (id)=>{
+   
  }
- const handleAddQuantity=(id)=>{
-  
+ //to add the quantity
+ const handleAddQuantity = (id)=>{
+  let cartData = get_session_storage_addtocart_item();
+  let addedItem = cartData.find(item=> item.id === id);
+  addedItem.quantity += 1 ;
+  sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(cartData));
  }
- const handleRemove=(id)=>{
-  
+ //to substruct from the quantity
+ const handleSubQuantity = (id)=>{
+  let cartData = get_session_storage_addtocart_item();
+  let addedItem = cartData.find(item=> item.id === id);
+  addedItem.quantity -= 1 ;
+  sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(cartData));
+ }
+ 
+ const handleContactChange = (event) => {
+  setContact(event.target.value);
+};
+const handleDeliveryChange = (event) => {
+  setDelivery(event.target.value);
+};
+ const handlePlaceOrder = ()=>{
+    let error=false;
+    if(contact==='')
+    {
+      setContactError("Contact No is required");
+      error=true;
+      toast.error("Contact No is required");
+    }
+    if(delivery==='')
+    {
+      setDeliveryError("Delivery address is required");
+      error=true;
+      toast.error("Delivery address is required")
+    }
+    if(!error)
+    {
+      //smart contract
+    }
  }
   return (
     <div>
-      {/* search popup area start */}
-      <div className="body-overlay" id="body-overlay" />
-      <div className="td-search-popup" id="td-search-popup">
-        <form
-          action="https://themefie.com/html/foodka/index.html"
-          className="search-form"
-        >
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search....."
-            />
-          </div>
-          <button type="submit" className="submit-btn">
-            <i className="fa fa-search" />
-          </button>
-        </form>
-      </div>
-      {/* //. search Popup */}
       {/* navbar start */}
       <Navbar></Navbar>
       {/* navbar end */}
@@ -155,7 +145,7 @@ const Cart = () => {
                 return(
                     <tr key={i}>
                       <td className="table-close-btn">
-                        <a href={handleRemove(item.id)}>
+                        <a href='#'>
                           <i className="ri-close-line" />
                         </a>
                       </td>
@@ -185,7 +175,7 @@ const Cart = () => {
                               min={1}
                               max={10000}
                               name="quantity"
-                              defaultValue={1}
+                              value={item.quantity}
                             />
                             <input
                               type="button"
@@ -208,31 +198,28 @@ const Cart = () => {
               </div>
             </div>
             <div className="col-lg-8">
-              <div className="promotional-area">
-                <form className="default-form-wrap">
-                  <div className="row">
-                    <div className="col-md-4 col-sm-6">
-                      <div className="single-input-wrap">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Coupon Code"
-                        />
+            <div className="bill-payment-wrap">
+                  <h5>Delivery details
+                  </h5>
+                  <div className="default-form-wrap style-2" style={{"padding":"20px","margin":"0px"}}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <label>Delivery Address</label>
+                        <div className="single-input-wrap">
+                          <input type="text" className="form-control" placeholder="Delivery Address" value={contact} onChange={handleContactChange}/>
+                          <span style={{"color":"#D8000C"}}>{deliveryError}</span>
+                        </div>
+                      </div>
+                      <div className="col-md-12">
+                        <label>Contact No</label>
+                        <div className="single-input-wrap">
+                          <input type="text" className="form-control" placeholder="Contact No" value={delivery} onChange={handleDeliveryChange}/>
+                          <span style={{"color":"#D8000C"}}>{contactError}</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="col-md-4 col-sm-6">
-                      <button type="submit" className="btn btn-secondary">
-                        APPLY COUPON
-                      </button>
-                    </div>
-                    <div className="col-md-4 col-sm-6 text-md-end">
-                      <button type="submit" className="btn btn-base">
-                        UPDATE CART
-                      </button>
-                    </div>
                   </div>
-                </form>
-              </div>
+                </div> 
             </div>
             <div className="col-lg-4">
               <div className="order-cart-area">
@@ -247,10 +234,9 @@ const Cart = () => {
                     </li>
                   </ul>
                 </div>
-                <a className="btn btn-secondary w-100" href="#">
-                  {" "}
-                  PROCEED TO CHECKOUT
-                </a>
+                <button className="btn btn-secondary w-100" onClick={handlePlaceOrder}>
+                  Place Order
+                </button>
               </div>
             </div>
           </div>

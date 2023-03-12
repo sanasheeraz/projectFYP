@@ -6,11 +6,9 @@ import { SAVE_CART_ITEM, USER_MENU_ITEM } from "../utils/constants";
 
 const MenuList = () => {
   const [menu_list, setmenu_list] = useState([]);
-
   const get_session_storage_menu_item = () => {
     const menu_items = sessionStorage.getItem(USER_MENU_ITEM);
     console.log({ menu_items });
-
     return JSON.parse(menu_items);
   };
 
@@ -20,9 +18,6 @@ const MenuList = () => {
       setmenu_list([...menu_list_data]);
     }
   }, []);
-  
-
-  console.log("menu_list================>", menu_list);
 
   const [cartItems, setCartItems] = useState([])
   const addToCart = (item)=>{
@@ -42,12 +37,13 @@ const MenuList = () => {
     if(addtocart_data){
       setCartItems([...addtocart_data, newItem]);
     }
-    
+
   }
   const get_session_storage_cart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
     return JSON.parse(cart_items);
   };
+
 
   return (
     <div>

@@ -100,12 +100,6 @@ const Navbar = () => {
                     <li>
                       <Link to={"/cart"}>Cart</Link>
                     </li>
-                    <li>
-                      <Link to={"/checkout"}>Checkout</Link>
-                    </li>
-                    <li>
-                      <Link to={"/addItem"}>addItem</Link>
-                    </li>
                   </ul>
                 </li>
                 <li>
@@ -121,25 +115,6 @@ const Navbar = () => {
                 <img src="assets/img/logo.png" alt="img" />
               </Link>
             </div>
-            <div className="nav-right-part nav-right-part-mobile">
-              <ul>
-                <li>
-                  <Link className="search" to={"#"}>
-                    <i className="ri-search-line"></i>
-                  </Link>
-                </li>
-                <li className="phone-contact d-md-block d-none">
-                  <i className="ri-phone-fill float-start"></i>
-                  +997 509 153 849
-                </li>
-                <li className="menu-cart">
-                  <Link to={"/cart"}>
-                    CART <span>1</span>
-                  </Link>
-                </li>
-                <li>49.50 $</li>
-              </ul>
-            </div>
             <div className="collapse navbar-collapse" id="themefie_main_menu">
               <ul className="navbar-nav menu-open">
                 {isRLoggedin ? (
@@ -149,6 +124,9 @@ const Navbar = () => {
                       <li>
                         <Link to={"/addItem"}>Add Menu Item</Link>
                       </li>
+                      <li>
+                        <Link to={"/myItems"}>My Menu Item</Link>
+                      </li>
                     </ul>
                   </li>
                 ) : (
@@ -156,12 +134,17 @@ const Navbar = () => {
                 )}
                 {isLoggedin || isRLoggedin ? (
                   <>
+                  <li className="current-menu-item" style={liStyle}>
+                    <Link to={"/cart"}>
+                      CART <span style={{"height":"24px","width":"24px","borderRadius":"50%","display":"inline-block","position":"absolute","backgroundColor":"var(--secondary-color)","textAlign":"center","color":"var(--heading-color)","lineHeight":"24px","padding":"0 11px 0 8px"}}>{cartCount}</span>
+                    </Link>
+                  </li>
                     <li className="current-menu-item" style={liStyle}>
-                      Welcome{" "}
-                      {rest_data ? rest_data : user_data ? user_data : ""}
+                      <Link to="/myOrders">Welcome{" "}
+                      {rest_data ? rest_data : user_data ? user_data : ""}</Link>
                     </li>
-                    <li onClick={() => logout()} style={liStyle}>
-                      Logout
+                    <li  style={liStyle}> 
+                      <Link onClick={() => logout()} >Logout</Link>  
                     </li>
                   </>
                 ) : (
@@ -184,16 +167,11 @@ const Navbar = () => {
                 )}
               </ul>
             </div>
-            <div className="nav-right-part nav-right-part-desktop">
+            {/* <div className="nav-right-part nav-right-part-desktop">
               <ul>
-                <li className="menu-cart">
-                  <Link to={"/cart"}>
-                    CART <span>{cartCount}</span>
-                  </Link>
-                </li>
-                <li>49.50 $</li>
+                
               </ul>
-            </div>
+            </div> */}
           </div>
         </nav>
       </header>
