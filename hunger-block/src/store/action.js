@@ -19,21 +19,28 @@ export const getPostsFail = (payload) => {
   return { type: "GET_POST_FAIL", payload };
 };
 
-function addToCart(item) {
+export const addToCart=(item)=> {
   return {
     type: "ADD_TO_CART",
     payload: item,
   };
 }
 
-function updateQuantity(itemId, newQuantity) {
+export const addQuantity=(itemId, newQuantity)=> {
   return {
-    type: "UPDATE_QUANTITY",
+    type: "ADD_QUANTITY",
     payload: { itemId, newQuantity },
   };
 }
 
-function removeItem(itemId) {
+export const subQuantity=(itemId, newQuantity)=>{
+  return {
+    type: "SUB_QUANTITY",
+    payload: { itemId, newQuantity },
+  };
+}
+
+export const removeItem=(itemId)=> {
   return {
     type: "REMOVE_ITEM",
     payload: itemId,

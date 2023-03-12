@@ -1,9 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { SAVE_CART_ITEM } from "../utils/constants";
+import { removeItem,addQuantity,subQuantity} from '../store/action';
 const Cart = () => {
+  // const dispatch = useDispatch();
+  // //to remove the item completely
+  // const handleRemove = (id)=>{
+  //   console.log("removing")
+  //   dispatch({
+  //     type: "REMOVE_ITEM",
+  //     payload: {
+  //       data: id
+  //     },
+  //   });
+  // }
+  // //to add the quantity
+  // const handleAddQuantity = (id)=>{
+  //   dispatch({
+  //     type: "ADD_QUANTITY",
+  //     payload: {
+  //       data: id
+  //     },
+  //   });
+  // }
+  // //to substruct from the quantity
+  // const handleSubQuantity = (id)=>{
+  //   dispatch({
+  //     type: "SUB_QUANTITY",
+  //     payload: {
+  //       data: id
+  //     },
+  //   });
+  // }
+
   const [cartItems, setCartItems] = useState([]);
   const get_session_storage_addtocart_item = () => {
     const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
@@ -18,12 +50,29 @@ const Cart = () => {
     }
   }, []);
   console.log("cart items================>", cartItems);
-
+  const TotalPrice=(price,quantity)=>{
+    return Number(price * quantity).toLocaleString('en-US');
+  }
+  const TotalAmount=()=>{
+    let TotalCart=0;
+    cartItems.forEach(function(item){
+        TotalCart+=item.quantity * item.price;
+      }); 
+    return TotalCart;
+  }
   // const addToCart = (item) => {
   //   const newItem = { ...item, quantity: 1 };
   //   setCartItems([...cartItems, newItem]);
   // };
+ const handleSubQuantity=(id)=>{
 
+ }
+ const handleAddQuantity=(id)=>{
+  
+ }
+ const handleRemove=(id)=>{
+  
+ }
   return (
     <div>
       {/* search popup area start */}
@@ -101,29 +150,25 @@ const Cart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                  {cartItems.length > 0 ? (
+              cartItems.map((item, i) => {
+                return(
+                    <tr key={i}>
                       <td className="table-close-btn">
-                        <a href="#">
+                        <a href={handleRemove(item.id)}>
                           <i className="ri-close-line" />
                         </a>
                       </td>
                       <th scope="row">
-                        <img src="assets/img/widget/01.png" alt="img" />
+                        <img src={"https://gateway.pinata.cloud/ipfs/"+item.image} alt="img" style={{"height":"100px","width":"95px"}} />
                       </th>
                       <td colSpan={2} className="item-name">
                         <div className="details">
-                          <h5>All Season Gulliver Pizza</h5>
-                          <ul>
-                            <li>
-                              <span>Select Size: </span>Large
-                            </li>
-                            <li>
-                              <span>Select Crust: </span>Double Crust
-                            </li>
-                          </ul>
+                          <h5>{item.name}</h5>
+                          <span>{item.unit}</span>
                         </div>
                       </td>
-                      <td>$50.00</td>
+                      <td>{item.price}</td>
                       <td className="table-quantity">
                         <form>
                           <div className="quantity buttons_added">
@@ -131,6 +176,7 @@ const Cart = () => {
                               type="button"
                               defaultValue="-"
                               className="minus"
+                              onClick={()=>{handleSubQuantity(item.id)}}
                             />
                             <input
                               type="number"
@@ -145,12 +191,18 @@ const Cart = () => {
                               type="button"
                               defaultValue="+"
                               className="plus"
+                              onClick={()=>{handleAddQuantity(item.id)}}
                             />
                           </div>
                         </form>
                       </td>
-                      <td>$40.00</td>
+                      <td>{TotalPrice(item.price,item.quantity)}</td>
                     </tr>
+                    );
+                  })
+                ) : (
+                  <h1>Loading...</h1>
+                )}
                   </tbody>
                 </table>
               </div>
@@ -187,11 +239,11 @@ const Cart = () => {
                 <div className="order-cart">
                   <h5>Cart totals</h5>
                   <ul>
-                    <li>
+                    {/* <li>
                       Subtotal<span>$50.00</span>
-                    </li>
+                    </li> */}
                     <li className="total">
-                      Total<span>$50.00</span>
+                      Total<span>{TotalAmount()}</span>
                     </li>
                   </ul>
                 </div>
@@ -221,3 +273,17 @@ const Cart = () => {
 };
 
 export default Cart;
+// const mapStateToProps = (state)=>{
+//     return{
+//         items: state.addedItems,
+//         //addedItems: state.addedItems
+//     }
+// }
+// const mapDispatchToProps = (dispatch)=>{
+//     return{
+//         removeItem: (id)=>{dispatch(removeItem(id))},
+//         addQuantity: (id)=>{dispatch(addQuantity(id))},
+//         subQuantity: (id)=>{dispatch(subQuantity(id))}
+//     }
+// }
+// export default connect(mapStateToProps,mapDispatchToProps)(Cart);

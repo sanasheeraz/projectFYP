@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
-// import { getMenuItems } from '../utils/interact'
+import { getMenuItems } from '../utils/interact'
 import { USER_MENU_ITEM } from "../utils/constants";
 const Menu = () => {
-  // getMenuItems();
+   
   const [menu_list, setmenu_list] = useState([]);
-
+  getMenuItems();
   const get_session_storage_menu_item = () => {
     const menu_items = sessionStorage.getItem(USER_MENU_ITEM);
     console.log({ menu_items });
@@ -21,9 +21,9 @@ const Menu = () => {
     if (menu_list_data) {
       setmenu_list([...menu_list_data]);
     }
+    console.log("menu_list================>", menu_list);
   }, []);
 
-  console.log("menu_list================>", menu_list);
   return (
     <div>
       {/* navbar start */}

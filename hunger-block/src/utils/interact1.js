@@ -12,7 +12,7 @@ const contractAddress = "0xde64c5c578ad30e063c2e9F6BC3ce305af4Aa8FB"; //my accou
 //0x024e13953dE02cF2328FfB0092Cd640270675D99 = started
 ///0x6a487f177B498C7b0770BB627830AeE036aAE2C9
 let theTxHash = "";
-const set_menu_item = (menu_item) => {
+const setmenu_item = (menu_item) => {
   let get_items = [];
   get_items = sessionStorage.getItem(USER_MENU_ITEM)
     ? JSON.parse(sessionStorage.getItem(USER_MENU_ITEM))
@@ -353,7 +353,7 @@ export const addMenuItem = async (name, description, price, unit, img) => {
       //   { name, description, price, unit, img },
       //   USER_MENU_ITEM
       // );
-      set_menu_item({ name, description, price, unit });
+      setmenu_item({ name, description, price, unit });
       console.log("receipt.....................", receipt);
       // console.log("receipt.....................", receipt);
       // do something on UI to indicate success wait
@@ -361,22 +361,22 @@ export const addMenuItem = async (name, description, price, unit, img) => {
 };
 export const getMenuItems = async () => {
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
-  const theABIData = window.contract.methods
-    .getMenuItems()
+  const theABIData = window.contract.methods.getMenuItems()
     .call(async function (error, results) {
       if (error != null) {
         console.log(error);
         toast.error(error);
       } else {
         sessionStorage.setItem(USER_MENU_ITEM, JSON.stringify(results));
-        // console.log("Result : " + results.length);
+        //console.log("Result : " + results.length);
         for (var i = 0; i < results.length; i++) {
           console.log("data......................", results[i]);
         }
-        const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM);
         // const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM);
         // }
       }
+      const menu_item_list = sessionStorage.getItem(USER_MENU_ITEM);
+        
     });
 };
 

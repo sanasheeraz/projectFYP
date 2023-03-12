@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import { SAVE_CART_ITEM, USER_MENU_ITEM } from "../utils/constants";
+
 const MenuList = () => {
   const [menu_list, setmenu_list] = useState([]);
 
@@ -25,32 +26,28 @@ const MenuList = () => {
 
   const [cartItems, setCartItems] = useState([])
   const addToCart = (item)=>{
-    sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(item));
+    //sessionStorage.setItem(SAVE_CART_ITEM, JSON.stringify(item));
      let get_items = [];
      if(sessionStorage.getItem(SAVE_CART_ITEM) !== null){
-      JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM));
+      get_items=JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM));
      }
      get_items.push(item);
     //  const newItem = {...get_items}
     // if(get_items){
     //   setCartItems([...get_items, newItem])
     // }
-     sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(get_items));
-    
-    console.log(get_items, " add to cart");
-    // const addtocart_data = get_session_storage_cart_item();
-    // const newItem = { ...get_items, quantity: 1 };
-    // if(addtocart_data){
-    // setCartItems([...addtocart_data, newItem]);
-  //}
+    sessionStorage.setItem(SAVE_CART_ITEM,JSON.stringify(get_items));
+    const addtocart_data = get_session_storage_cart_item();
+    const newItem = { ...get_items, quantity: 1 };
+    if(addtocart_data){
+      setCartItems([...addtocart_data, newItem]);
+    }
     
   }
-  // const get_session_storage_cart_item = () => {
-  //   const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
-  //   console.log({ cart_items });
-
-  //   return JSON.parse(cart_items);
-  // };
+  const get_session_storage_cart_item = () => {
+    const cart_items = sessionStorage.getItem(SAVE_CART_ITEM);
+    return JSON.parse(cart_items);
+  };
 
   return (
     <div>
@@ -108,15 +105,22 @@ const MenuList = () => {
           <div className="row justify-content-center">
             {menu_list.length > 0 ? (
               menu_list.map((item, i) => {
-                const { name, description, price } = item;
+                //const { name, description, price } = item;
+                const id=item[0];
+                const name = item[1];
+                const description = item[2];
+                const price = item[3];
+                const unit = item[4];
+                const image = item[5];
+                const quantity = 1;
                 console.log(item, "items.............");
                 return (
-                  <div className="col-lg-6">
+                  <div className="col-lg-6" key={i}>
                     <div className="single-item-wrap style-2">
                       <div className="media">
                         <div className="thumb">
                           <img
-                            src="assets/img/product/burger/1.png"
+                            src={"https://gateway.pinata.cloud/ipfs/"+image}
                             alt="img"
                           />
                         </div>
@@ -126,9 +130,9 @@ const MenuList = () => {
                           </h5>
                           <p>{description}</p>
                           <div className="wrap-footer">
-                            <h6 className="price">{price}</h6>
+                            <h6 className="price">{item[3]}</h6>
                             <button type="submit" className="btn btn-secondary" 
-                            onClick={()=>{addToCart({name, description, price})}}>
+                            onClick={()=>{addToCart({id,name, description, price,unit,image,quantity})}}>
                               ADD TO CART
                             </button>
                           </div>

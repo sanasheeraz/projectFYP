@@ -9,8 +9,19 @@ import {
   get_rest_session_storage,
   get_session_storage,
 } from "../utils/interact";
+import { SAVE_CART_ITEM } from "../utils/constants";
 const Navbar = () => {
   const dispatch = useDispatch();
+  const[cartCount,setCartCount]=useState(0);
+  useEffect(() => {
+    if("SAVE_CART_ITEM" in sessionStorage)
+    {
+      const count = JSON.parse(sessionStorage.getItem(SAVE_CART_ITEM)).length;
+      if (count>0) {
+        setCartCount(count);
+      }
+    }
+  }, []);
   const { user_auth: isLoggedin, user_data } = useSelector(
     (state) => state.user_auth
   );
@@ -175,12 +186,12 @@ const Navbar = () => {
             </div>
             <div className="nav-right-part nav-right-part-desktop">
               <ul>
-                {/* <li className="menu-cart">
+                <li className="menu-cart">
                   <Link to={"/cart"}>
-                    CART <span>1</span>
+                    CART <span>{cartCount}</span>
                   </Link>
                 </li>
-                <li>49.50 $</li> */}
+                <li>49.50 $</li>
               </ul>
             </div>
           </div>
