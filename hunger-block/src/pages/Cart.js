@@ -36,7 +36,7 @@ const Cart = () => {
     let TotalCart=0;
     cartItems.forEach(function(item){
         TotalCart+=item.quantity * item.price;
-      }); 
+      });
     return TotalCart;
   }
   // const addToCart = (item) => {
@@ -103,8 +103,12 @@ const handleDeliveryChange = (event) => {
       const cartData = cartItems.map(function(item) {
         return { "menuId": item.id, "quantity": item.quantity ,"itemPrice":item.price};
       });
-      await placeOrder(cartData,delivery,contact,today,amount);
-      navigate("/myOrders");
+      // await placeOrder(cartData,delivery,contact,today,amount);
+      await placeOrder(cartData,delivery,contact,today,TotalAmount());
+      sessionStorage.removeItem("SAVE_CART_ITEM");
+      // navigate("/myOrders");
+      navigate("/allOrders");
+
     }
  }
   return (
